@@ -1,5 +1,5 @@
 CREATE TABLE cliente(
-    cli_id int,
+    cli_id int not null auto_increment,
     cli_nome varchar(200) not null,
     cli_email varchar(200) not null,
     cli_senha varchar(100) not null,
@@ -7,7 +7,7 @@ CREATE TABLE cliente(
 );
 
 CREATE TABLE endereco(
-    end_id int,
+    end_id int not null auto_increment,
     end_cidade varchar(100) not null,
     end_bairro varchar(100) not null,
     end_rua varchar(100) not null,
@@ -16,14 +16,14 @@ CREATE TABLE endereco(
 );
 
 CREATE TABLE filme(
-    fil_id int,
+    fil_id int not null auto_increment,
     fil_nome varchar(200) not null,
     fil_duracao int not null,
     PRIMARY KEY(fil_id)
 );
 
 CREATE TABLE cinema(
-    cin_id int,
+    cin_id int not null auto_increment,
     cin_nome varchar(200) not null,
     fk_endereco_id int not null,
     fk_cliente_id int not null,
@@ -33,7 +33,7 @@ CREATE TABLE cinema(
 );
 
 CREATE TABLE horario(
-    hor_id int,
+    hor_id int not null auto_increment,
     hor_dia varchar(50) not null,
     hor_horario varchar(50) not null,
     fk_cinema_id int not null,
@@ -42,7 +42,7 @@ CREATE TABLE horario(
 );
 
 CREATE TABLE sala_de_cinema(
-    sala_id int,
+    sala_id int not null auto_increment,
     sala_num int not null,
     sala_bancos int not null,
     fk_cinema_id int not null,
@@ -51,7 +51,7 @@ CREATE TABLE sala_de_cinema(
 );
 
 CREATE TABLE sessao(
-    ses_id int,
+    ses_id int not null auto_increment,
     ses_horario varchar(100) not null,
     ses_quant_ingresso int not null,
     ses_ingresso_preco numeric(6,2) not null,
@@ -63,7 +63,7 @@ CREATE TABLE sessao(
 );
 
 CREATE TABLE cliente_sessao(
-    cli_ses_id int,
+    cli_ses_id int not null auto_increment,
     cli_ses_check bool not null,
     fk_cliente_id int not null,
     fk_sessao_id int not null,
