@@ -6,6 +6,7 @@ public record DadosAtualizaCliente(
         @NotNull
         Long id,
         String nome,
-        String email
+        String email,
+        Long cinema
 ) {
 }

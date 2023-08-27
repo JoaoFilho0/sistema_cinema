@@ -16,23 +16,37 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cli_id;
-    private String cli_nome;
-    private String cli_email;
-    private String cli_senha;
+    @Column(name = "cli_id")
+    private Long id;
+
+    @Column(name = "cli_nome")
+    private String nome;
+
+    @Column(name = "cli_email")
+    private String email;
+
+    @Column(name = "cli_senha")
+    private String senha;
+
+    @Column(name = "fk_cinema_id")
+    private Long cinema;
 
     public Cliente(DadosCadastroCliente dados) {
-        this.cli_nome = dados.cli_nome();
-        this.cli_email = dados.cli_email();
-        this.cli_senha = dados.cli_senha();
+        this.nome = dados.nome();
+        this.email = dados.email();
+        this.senha = dados.senha();
+        this.cinema = dados.cinema();
     }
 
     public void atualizaDados(DadosAtualizaCliente dados) {
         if (dados.nome() != null) {
-            this.cli_nome = dados.nome();
+            this.nome = dados.nome();
         }
         if (dados.email() != null) {
-            this.cli_email = dados.email();
+            this.email = dados.email();
+        }
+        if (dados.cinema() != null) {
+            this.cinema = dados.cinema();
         }
     }
 }

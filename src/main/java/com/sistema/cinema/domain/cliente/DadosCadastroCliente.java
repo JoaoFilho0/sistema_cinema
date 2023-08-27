@@ -5,11 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 
 public record DadosCadastroCliente(
     @NotBlank
-    String cli_nome,
+    String nome,
     @NotBlank
     @Email
-    String cli_email,
+    String email,
     @NotBlank
-    String cli_senha
+    String senha,
+    Long cinema
 ) {
 }

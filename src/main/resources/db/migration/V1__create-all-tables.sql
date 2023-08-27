@@ -1,11 +1,3 @@
-CREATE TABLE cliente(
-    cli_id int not null auto_increment,
-    cli_nome varchar(200) not null,
-    cli_email varchar(200) not null,
-    cli_senha varchar(100) not null,
-    PRIMARY KEY(cli_id)
-);
-
 CREATE TABLE endereco(
     end_id int not null auto_increment,
     end_cidade varchar(100) not null,
@@ -26,10 +18,18 @@ CREATE TABLE cinema(
     cin_id int not null auto_increment,
     cin_nome varchar(200) not null,
     fk_endereco_id int not null,
-    fk_cliente_id int not null,
     PRIMARY KEY(cin_id),
-    FOREIGN KEY (fk_endereco_id) REFERENCES endereco(end_id),
-    FOREIGN KEY (fk_cliente_id) REFERENCES cliente(cli_id)
+    FOREIGN KEY (fk_endereco_id) REFERENCES endereco(end_id)
+);
+
+CREATE TABLE cliente(
+    cli_id int not null auto_increment,
+    cli_nome varchar(200) not null,
+    cli_email varchar(200) not null,
+    cli_senha varchar(100) not null,
+    fk_cinema_id int,
+    PRIMARY KEY(cli_id),
+    FOREIGN KEY (fk_cinema_id) REFERENCES cinema(cin_id)
 );
 
 CREATE TABLE horario(
