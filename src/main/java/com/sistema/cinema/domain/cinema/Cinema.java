@@ -26,7 +26,8 @@ public class Cinema {
     @Column(name = "cin_nome")
     private String nome;
 
-    @Column(name = "fk_endereco_id")
+    @OneToOne
+    @JoinColumn(name = "fk_endereco_id")
     private Endereco endereco;
 
     @OneToOne(mappedBy = "cinema")

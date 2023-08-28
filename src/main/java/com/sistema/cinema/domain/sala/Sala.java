@@ -26,7 +26,8 @@ public class Sala {
     @Column(name = "sala_bancos")
     private int assentos;
 
-    @Column(name = "fk_cinema_id")
+    @JoinColumn(name = "fk_cinema_id")
+    @ManyToOne
     private Cinema cinema;
 
     public Sala(DadosCadastroSala dados) {
