@@ -1,5 +1,7 @@
 package com.sistema.cinema.domain.cliente;
 
+import com.sistema.cinema.domain.cinema.Cinema;
+import com.sistema.cinema.domain.cinema.DadosAtualizaCinema;
 import jakarta.validation.constraints.NotNull;
 
 public record DadosAtualizaCliente(
@@ -7,6 +9,6 @@ public record DadosAtualizaCliente(
         Long id,
         String nome,
         String email,
-        Long cinema
+        Cinema cinema
 ) {
 }

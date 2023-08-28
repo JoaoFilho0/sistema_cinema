@@ -2,14 +2,12 @@ package com.sistema.cinema.domain.cliente;
 
 import com.sistema.cinema.domain.cinema.Cinema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Table(name = "cliente")
 @Entity(name = "Cliente")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -30,7 +28,7 @@ public class Cliente {
     private String senha;
 
     @OneToOne
-    @PrimaryKeyJoinColumn(name = "fk_cinema_id", referencedColumnName = "cin_id")
+    @JoinColumn(name = "fk_cinema_id")
     private Cinema cinema;
 
     public Cliente(DadosCadastroCliente dados) {

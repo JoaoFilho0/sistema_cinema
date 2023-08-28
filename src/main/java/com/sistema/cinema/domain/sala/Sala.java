@@ -1,15 +1,15 @@
 package com.sistema.cinema.domain.sala;
 
 import com.sistema.cinema.domain.cinema.Cinema;
+import com.sistema.cinema.domain.cinema.CinemaRepository;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Table(name = "sala_de_cinema")
 @Entity(name = "Sala")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -26,14 +26,13 @@ public class Sala {
     @Column(name = "sala_bancos")
     private int assentos;
 
-    @JoinColumn(name = "fk_cinema_id")
     @ManyToOne
+    @JoinColumn(name = "fk_cinema_id")
     private Cinema cinema;
 
     public Sala(DadosCadastroSala dados) {
         this.numero = dados.numero();
         this.assentos = dados.assentos();
-        this.cinema = dados.cinema();
     }
 
     public void atualizaDados(DadosAtualizaSala dados) {

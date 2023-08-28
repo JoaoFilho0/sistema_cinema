@@ -6,11 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record DadosCadastroSala(
-        @NotBlank
+        @NotNull
         int numero,
-        @NotBlank
+        @NotNull
         int assentos,
         @NotNull
-        @Valid
-        Cinema cinema) {
+        Long cinema) {
 }

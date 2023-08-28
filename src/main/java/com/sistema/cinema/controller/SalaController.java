@@ -1,5 +1,7 @@
 package com.sistema.cinema.controller;
 
+import com.sistema.cinema.domain.cinema.Cinema;
+import com.sistema.cinema.domain.cinema.CinemaRepository;
 import com.sistema.cinema.domain.cliente.DadosListagemCliente;
 import com.sistema.cinema.domain.sala.*;
 import jakarta.validation.Valid;
@@ -11,30 +13,42 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("cinema/sala")
 public class SalaController {
 
     @Autowired
-    private SalaRepository repository;
+    private SalaRepository salaRepository;
+
+    @Autowired
+    private CinemaRepository cinemaRepository;
 
     @PostMapping
     @Transactional
     public void cadastrar(@RequestBody @Valid DadosCadastroSala dados) {
         var sala = new Sala(dados);
-        repository.save(sala);
+        var cinema = cinemaRepository.getReferenceById(dados.cinema());
+
+        sala.setCinema(cinema);
+
+        salaRepository.save(sala);
     }
 
-    @GetMapping
-    public ResponseEntity<Page<DadosListagemSala>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
-        var page = repository.findAll(paginacao).map(DadosListagemSala::new);
-        return ResponseEntity.ok(page);
+    @GetMapping("/{cinema_id}")
+    public List<Sala> listar(@PathVariable Long cinema_id, @PageableDefault(size = 10, sort = {"id"}) Pageable paginacao) {
+//        var page = salaRepository.findAll(paginacao).map(DadosListagemSala::new);
+        var cinema = cinemaRepository.getReferenceById(cinema_id);
+        var page = cinema.getSalas();
+
+        return page;
     }
 
     @PutMapping
     @Transactional
     public void atualizar(@RequestBody @Valid DadosAtualizaSala dados) {
-        var sala = repository.getReferenceById(dados.id());
+        var sala = salaRepository.getReferenceById(dados.id());
         sala.atualizaDados(dados);
     }
 

@@ -4,11 +4,14 @@ import com.sistema.cinema.domain.cliente.Cliente;
 import com.sistema.cinema.domain.endereco.DadosAtualizaEndereco;
 import com.sistema.cinema.domain.endereco.DadosCadastroEndereco;
 import com.sistema.cinema.domain.endereco.Endereco;
+import com.sistema.cinema.domain.sala.Sala;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Table(name = "cinema")
 @Entity(name = "Cinema")
@@ -26,12 +29,13 @@ public class Cinema {
     @Column(name = "cin_nome")
     private String nome;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_endereco_id")
     private Endereco endereco;
 
-    @OneToOne(mappedBy = "cinema")
-    private Cliente cliente;
+    @OneToMany
+    @JoinColumn(name = "fk_cinema_id")
+    private List<Sala> salas;
 
     public Cinema(DadosCadastroCinema dados) {
         this.nome = dados.nome();
