@@ -1,10 +1,10 @@
-package com.sistema.cinema.domain.sala;
+package com.sistema.cinema.domain.sessao;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SalaRepository extends JpaRepository<Sala, Long> {
+public interface SessaoRepository extends JpaRepository<Sessao, Long> {
     @Override
-    Page<Sala> findAll(Pageable paginacao);
+    Page<Sessao> findAll(Pageable paginacao);
 }

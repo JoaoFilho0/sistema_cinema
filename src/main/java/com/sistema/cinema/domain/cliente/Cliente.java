@@ -1,5 +1,6 @@
 package com.sistema.cinema.domain.cliente;
 
+import com.sistema.cinema.domain.cinema.Cinema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -28,14 +29,14 @@ public class Cliente {
     @Column(name = "cli_senha")
     private String senha;
 
-    @Column(name = "fk_cinema_id")
-    private Long cinema;
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "fk_cinema_id", referencedColumnName = "cin_id")
+    private Cinema cinema;
 
     public Cliente(DadosCadastroCliente dados) {
         this.nome = dados.nome();
         this.email = dados.email();
         this.senha = dados.senha();
-        this.cinema = dados.cinema();
     }
 
     public void atualizaDados(DadosAtualizaCliente dados) {
@@ -44,9 +45,6 @@ public class Cliente {
         }
         if (dados.email() != null) {
             this.email = dados.email();
-        }
-        if (dados.cinema() != null) {
-            this.cinema = dados.cinema();
         }
     }
 }

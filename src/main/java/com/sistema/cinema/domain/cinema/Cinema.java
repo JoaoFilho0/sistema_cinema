@@ -1,5 +1,6 @@
 package com.sistema.cinema.domain.cinema;
 
+import com.sistema.cinema.domain.cliente.Cliente;
 import com.sistema.cinema.domain.endereco.DadosAtualizaEndereco;
 import com.sistema.cinema.domain.endereco.DadosCadastroEndereco;
 import com.sistema.cinema.domain.endereco.Endereco;
@@ -28,9 +29,12 @@ public class Cinema {
     @Column(name = "fk_endereco_id")
     private Endereco endereco;
 
+    @OneToOne(mappedBy = "cinema")
+    private Cliente cliente;
+
     public Cinema(DadosCadastroCinema dados) {
         this.nome = dados.nome();
-        this.endereco = dados.endereco();
+        this.endereco = new Endereco(dados.endereco());
     }
 
     public void atualizaDados(DadosAtualizaCinema dados) {
