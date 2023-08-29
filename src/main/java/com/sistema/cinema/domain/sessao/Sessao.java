@@ -1,8 +1,7 @@
 package com.sistema.cinema.domain.sessao;
 
 import com.sistema.cinema.domain.filme.Filme;
-import com.sistema.cinema.domain.sala.DadosCadastroSala;
-import com.sistema.cinema.domain.sala.Sala;
+import com.sistema.cinema.domain.sala.Salas;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,14 +27,6 @@ public class Sessao {
 
     @Column(name = "ses_ingresso_preco")
     private float preco;
-
-    @ManyToOne
-    @JoinColumn(name = "fk_cinema_id")
-    private Sala sala;
-
-    @ManyToOne
-    @JoinColumn(name = "fk_filme_id")
-    private Filme filme;
 
 
     public Sessao(DadosCadastroSessao dados) {

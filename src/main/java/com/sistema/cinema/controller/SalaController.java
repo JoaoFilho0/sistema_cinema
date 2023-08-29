@@ -1,15 +1,14 @@
 package com.sistema.cinema.controller;
 
-import com.sistema.cinema.domain.cinema.Cinema;
 import com.sistema.cinema.domain.cinema.CinemaRepository;
-import com.sistema.cinema.domain.cliente.DadosListagemCliente;
+import com.sistema.cinema.domain.cinema_salas.CinemaSalas;
+import com.sistema.cinema.domain.cinema_salas.CinemaSalasRepository;
+import com.sistema.cinema.domain.cinema_salas.DadosCadastroCinemaSalas;
 import com.sistema.cinema.domain.sala.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,25 +19,24 @@ import java.util.List;
 public class SalaController {
 
     @Autowired
-    private SalaRepository salaRepository;
+    private SalasRepository salasRepository;
 
     @Autowired
     private CinemaRepository cinemaRepository;
 
+    @Autowired
+    private CinemaSalasRepository cinemaSalasRepository;
+
     @PostMapping
     @Transactional
-    public void cadastrar(@RequestBody @Valid DadosCadastroSala dados) {
-        var sala = new Sala(dados);
-        var cinema = cinemaRepository.getReferenceById(dados.cinema());
+    public void cadastrar(@RequestBody @Valid DadosCadastroCinemaSalas dados) {
+        var cinemaSalas = new CinemaSalas(dados);
 
-        sala.setCinema(cinema);
-
-        salaRepository.save(sala);
+        cinemaSalasRepository.save(cinemaSalas);
     }
 
     @GetMapping("/{cinema_id}")
-    public List<Sala> listar(@PathVariable Long cinema_id, @PageableDefault(size = 10, sort = {"id"}) Pageable paginacao) {
-//        var page = salaRepository.findAll(paginacao).map(DadosListagemSala::new);
+    public List<Salas> listar(@PathVariable Long cinema_id, @PageableDefault(size = 10, sort = {"id"}) Pageable paginacao) {
         var cinema = cinemaRepository.getReferenceById(cinema_id);
         var page = cinema.getSalas();
 
@@ -47,8 +45,8 @@ public class SalaController {
 
     @PutMapping
     @Transactional
-    public void atualizar(@RequestBody @Valid DadosAtualizaSala dados) {
-        var sala = salaRepository.getReferenceById(dados.id());
+    public void atualizar(@RequestBody @Valid DadosAtualizaSalas dados) {
+        var sala = salasRepository.getReferenceById(dados.id());
         sala.atualizaDados(dados);
     }
 

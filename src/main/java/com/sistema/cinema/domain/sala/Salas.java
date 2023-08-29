@@ -1,41 +1,36 @@
 package com.sistema.cinema.domain.sala;
 
 import com.sistema.cinema.domain.cinema.Cinema;
-import com.sistema.cinema.domain.cinema.CinemaRepository;
+import com.sistema.cinema.domain.cinema_salas.CinemaSalas;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
-@Table(name = "sala_de_cinema")
-@Entity(name = "Sala")
+@Table(name = "salas")
+@Entity(name = "Salas")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Sala {
+public class Salas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sala_id")
     private Long id;
 
-    @Column(name = "sala_num")
+    @Column(name = "sala_numero")
     private int numero;
 
-    @Column(name = "sala_bancos")
+    @Column(name = "sala_assentos")
     private int assentos;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_cinema_id")
-    private Cinema cinema;
-
-    public Sala(DadosCadastroSala dados) {
+    public Salas(DadosCadastroSalas dados) {
         this.numero = dados.numero();
         this.assentos = dados.assentos();
     }
 
-    public void atualizaDados(DadosAtualizaSala dados) {
+    public void atualizaDados(DadosAtualizaSalas dados) {
         if (this.numero != 0) {
             this.numero = dados.numero();
         }

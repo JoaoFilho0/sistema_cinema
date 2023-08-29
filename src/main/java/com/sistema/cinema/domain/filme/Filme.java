@@ -1,5 +1,6 @@
 package com.sistema.cinema.domain.filme;
 
+import com.sistema.cinema.domain.cinema.DadosAtualizaCinema;
 import com.sistema.cinema.domain.sessao.Sessao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,10 +29,17 @@ public class Filme {
     @Column(name = "fil_duracao")
     private int duracao;
 
-    @OneToMany(mappedBy = "filme")
-    private List<Sessao> sessoes;
-
     public Filme(DadosCadastroFilme dados) {
+        this.titulo = dados.titulo();
+        this.duracao = dados.duracao();
+    }
 
+    public void atualizaDados(DadosAtualizaFilme dados) {
+        if(dados.titulo() != null){
+            this.titulo = dados.titulo();
+        }
+        if(dados.duracao() != 0) {
+            this.duracao = dados.duracao();
+        }
     }
 }

@@ -1,43 +1,43 @@
-package com.sistema.cinema.domain.cliente;
+package com.sistema.cinema.domain.usuario;
 
 import com.sistema.cinema.domain.cinema.Cinema;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Table(name = "cliente")
-@Entity(name = "Cliente")
+@Table(name = "usuario")
+@Entity(name = "Usuario")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Cliente {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cli_id")
+    @Column(name = "usu_id")
     private Long id;
 
-    @Column(name = "cli_nome")
+    @Column(name = "usu_nome")
     private String nome;
 
-    @Column(name = "cli_email")
+    @Column(name = "usu_email")
     private String email;
 
-    @Column(name = "cli_senha")
+    @Column(name = "usu_senha")
     private String senha;
 
     @OneToOne
     @JoinColumn(name = "fk_cinema_id")
     private Cinema cinema;
 
-    public Cliente(DadosCadastroCliente dados) {
+    public Usuario(DadosCadastroUsuario dados) {
         this.nome = dados.nome();
         this.email = dados.email();
         this.senha = dados.senha();
     }
 
-    public void atualizaDados(DadosAtualizaCliente dados) {
+    public void atualizaDados(DadosAtualizaUsuario dados) {
         if (dados.nome() != null) {
             this.nome = dados.nome();
         }

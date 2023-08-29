@@ -1,6 +1,6 @@
 package com.sistema.cinema.domain.sala;
 
-public record DadosAtualizaSala(
+public record DadosAtualizaSalas(
         Long id,
         int numero,
         int assentos

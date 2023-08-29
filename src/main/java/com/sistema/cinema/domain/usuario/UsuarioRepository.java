@@ -1,10 +1,10 @@
-package com.sistema.cinema.domain.cliente;
+package com.sistema.cinema.domain.usuario;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Override
-    Page<Cliente> findAll(Pageable paginacao);
+    Page<Usuario> findAll(Pageable paginacao);
 }

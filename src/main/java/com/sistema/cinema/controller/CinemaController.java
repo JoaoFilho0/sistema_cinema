@@ -1,14 +1,10 @@
 package com.sistema.cinema.controller;
 
 import com.sistema.cinema.domain.cinema.*;
-import com.sistema.cinema.domain.cliente.Cliente;
-import com.sistema.cinema.domain.cliente.ClienteRepository;
-import com.sistema.cinema.domain.cliente.DadosAtualizaCliente;
-import com.sistema.cinema.domain.endereco.Endereco;
+import com.sistema.cinema.domain.usuario.UsuarioRepository;
 import com.sistema.cinema.domain.endereco.EnderecoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +22,7 @@ public class CinemaController {
     private CinemaRepository cinemaRepository;
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private EnderecoRepository enderecoRepository;
@@ -35,14 +31,14 @@ public class CinemaController {
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroCinema dados, UriComponentsBuilder uriBuilder) {
         var cinema = new Cinema(dados);
-        var cliente = clienteRepository.getReferenceById(dados.cliente());
+        var cliente = usuarioRepository.getReferenceById(dados.cliente());
 
         var cinemaDados = cinemaRepository.save(cinema);
         cliente.setCinema(cinemaDados);
 
-        clienteRepository.save(cliente);
+        usuarioRepository.save(cliente);
 
-        var uri =  uriBuilder.path("cinema/{id}").buildAndExpand(cinema.getId()).toUri();
+        var uri = uriBuilder.path("cinema/{id}").buildAndExpand(cinema.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new DadosDetalhamentoCinema(cinema));
     }

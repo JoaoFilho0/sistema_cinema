@@ -1,10 +1,8 @@
 package com.sistema.cinema.domain.cinema;
 
-import com.sistema.cinema.domain.cliente.Cliente;
-import com.sistema.cinema.domain.endereco.DadosAtualizaEndereco;
-import com.sistema.cinema.domain.endereco.DadosCadastroEndereco;
 import com.sistema.cinema.domain.endereco.Endereco;
-import com.sistema.cinema.domain.sala.Sala;
+import com.sistema.cinema.domain.horario.Horario;
+import com.sistema.cinema.domain.sala.Salas;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -34,8 +32,20 @@ public class Cinema {
     private Endereco endereco;
 
     @OneToMany
-    @JoinColumn(name = "fk_cinema_id")
-    private List<Sala> salas;
+    @JoinTable(
+            name = "cinema_salas",
+            joinColumns = @JoinColumn(name = "fk_cinema_id"),
+            inverseJoinColumns = @JoinColumn(name = "fk_salas_id")
+    )
+    private List<Salas> salas;
+
+    @OneToMany
+    @JoinTable(
+            name = "cinema_horario",
+            joinColumns = @JoinColumn(name = "fk_cinema_id"),
+            inverseJoinColumns = @JoinColumn(name = "fk_horario_id")
+    )
+    private List<Horario> horarios;
 
     public Cinema(DadosCadastroCinema dados) {
         this.nome = dados.nome();

@@ -1,10 +1,9 @@
-package com.sistema.cinema.domain.cliente;
+package com.sistema.cinema.domain.usuario;
 
 import com.sistema.cinema.domain.cinema.Cinema;
-import com.sistema.cinema.domain.cinema.DadosAtualizaCinema;
 import jakarta.validation.constraints.NotNull;
 
-public record DadosAtualizaCliente(
+public record DadosAtualizaUsuario(
         @NotNull
         Long id,
         String nome,
