@@ -1,6 +1,7 @@
 package com.sistema.cinema.domain.filme;
 
 import com.sistema.cinema.domain.cinema.DadosAtualizaCinema;
+import com.sistema.cinema.domain.sala.Salas;
 import com.sistema.cinema.domain.sessao.Sessao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Table(name = "filme")
+@Table(name = "filmes")
 @Entity(name = "Filme")
 @Getter
 @NoArgsConstructor
@@ -28,6 +29,14 @@ public class Filme {
 
     @Column(name = "fil_duracao")
     private int duracao;
+
+    @OneToMany
+    @JoinTable(
+            name = "sessao_filmes",
+            joinColumns = @JoinColumn(name = "fk_sessao_id"),
+            inverseJoinColumns = @JoinColumn(name = "fk_filmes_id")
+    )
+    private List<Sessao> sessao;
 
     public Filme(DadosCadastroFilme dados) {
         this.titulo = dados.titulo();

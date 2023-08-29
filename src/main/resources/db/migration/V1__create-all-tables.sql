@@ -74,9 +74,9 @@ CREATE TABLE sessao_salas(
 CREATE TABLE sessao_filmes(
     ses_fil_id int PRIMARY KEY AUTO_INCREMENT,
     fk_filmes_id int not null,
-    fk_salas_id int not null,
+    fk_sessao_id int not null,
     FOREIGN KEY (fk_filmes_id) REFERENCES filmes(fil_id),
-    FOREIGN KEY (fk_salas_id) REFERENCES salas(sala_id)
+    FOREIGN KEY (fk_sessao_id) REFERENCES sessao(ses_id)
 );
 
 CREATE TABLE usuario_sessao(

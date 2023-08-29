@@ -1,8 +1,12 @@
 package com.sistema.cinema.domain.usuario;
 
 import com.sistema.cinema.domain.cinema.Cinema;
+import com.sistema.cinema.domain.sala.Salas;
+import com.sistema.cinema.domain.sessao.Sessao;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Table(name = "usuario")
 @Entity(name = "Usuario")
@@ -30,6 +34,14 @@ public class Usuario {
     @OneToOne
     @JoinColumn(name = "fk_cinema_id")
     private Cinema cinema;
+
+    @OneToMany
+    @JoinTable(
+            name = "usuario_sessao",
+            joinColumns = @JoinColumn(name = "fk_usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "fk_sessao_id")
+    )
+    private List<Sessao> sessao;
 
     public Usuario(DadosCadastroUsuario dados) {
         this.nome = dados.nome();

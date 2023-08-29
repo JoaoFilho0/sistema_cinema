@@ -8,7 +8,7 @@ import lombok.*;
 @Table(name = "sessao")
 @Entity(name = "Sessao")
 @Getter
-@Builder
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -22,20 +22,25 @@ public class Sessao {
     @Column(name = "ses_horario")
     private String horario;
 
-    @Column(name = "ses_quant_ingresso")
+    @Column(name = "ses_quantidade_ingresso")
     private int ingressos;
 
-    @Column(name = "ses_ingresso_preco")
+    @Column(name = "ses_preco_ingresso")
     private float preco;
 
 
-    public Sessao(DadosCadastroSessao dados) {
+    public Sessao(DadosSessao dados) {
         this.horario = dados.horario();
         this.ingressos = dados.ingressos();
         this.preco = dados.preco();
     }
 
-    private void createSessao(DadosCadastroSessao dados) {
-
+    public void atualizaDados(DadosAtualizaSessao dados) {
+        if (dados.ingressos() > 0) {
+            this.ingressos = dados.ingressos();
+        }
+        if (dados.preco() != 0) {
+            this.preco = dados.preco();
+        }
     }
 }
