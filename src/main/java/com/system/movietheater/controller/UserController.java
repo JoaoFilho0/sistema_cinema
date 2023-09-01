@@ -3,7 +3,6 @@ package com.system.movietheater.controller;
 import com.system.movietheater.domain.movietheater.MovieTheaterRepository;
 import com.system.movietheater.domain.session.DataUpdateSession;
 import com.system.movietheater.domain.session.SessionRepository;
-import com.sistema.cinema.domain.user.*;
 import com.system.movietheater.domain.user.*;
 import com.system.movietheater.domain.usersession.DataRegisterUserSession;
 import com.system.movietheater.domain.usersession.UserSession;
@@ -37,47 +36,48 @@ public class UserController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DataRegisterUser dados, UriComponentsBuilder uriBuilder) {
-        var usuario = new User(dados);
-        userRepository.save(usuario);
+    public ResponseEntity register(@RequestBody @Valid DataRegisterUser data, UriComponentsBuilder uriBuilder) {
+        var user = new User(data);
 
-        var uri = uriBuilder.path("usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+        userRepository.save(user);
 
-        return ResponseEntity.created(uri).body(new DataDetailingUser(usuario));
+        var uri = uriBuilder.path("usuario/{id}").buildAndExpand(user.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new DataDetailingUser(user));
     }
 
     @PostMapping("/sessao")
     @Transactional
-    public void cadastrarUsuarioSessao(@RequestBody @Valid DataRegisterUserSession dados, UriComponentsBuilder uriBuilder) {
-        var usuarioSessao = new UserSession(dados);
-        var sessao = sessionRepository.getReferenceById(dados.sessao().id());
+    public void registerUserSession(@RequestBody @Valid DataRegisterUserSession data, UriComponentsBuilder uriBuilder) {
+        var userSession = new UserSession(data);
+        var session = sessionRepository.getReferenceById(data.session().id());
 
-        usuarioSessao.setSession(sessao);
+        userSession.setSession(session);
 
-        userSessionRepository.save(usuarioSessao);
+        userSessionRepository.save(userSession);
 
-        sessao.setIngressos(sessao.getIngressos() - 1);
-        sessao.atualizaDados(new DataUpdateSession(sessao.getId(), sessao.getIngressos(), sessao.getPreco()));
+        session.setIngressos(session.getIngressos() - 1);
+        session.atualizaDados(new DataUpdateSession(session.getId(), session.getIngressos(), session.getPreco()));
 
     }
 
     @GetMapping
-    public List<User> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
+    public List<User> list(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
         return userRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public User selecionar(@PathVariable Long id) {
+    public User select(@PathVariable Long id) {
         var page = userRepository.findById(id);
         return page.get();
     }
 
     @PutMapping
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid DataUpdateUser dados) {
-        var usuario = userRepository.getReferenceById(dados.id());
-        usuario.atualizaDados(dados);
+    public ResponseEntity update(@RequestBody @Valid DataUpdateUser data) {
+        var user = userRepository.getReferenceById(data.id());
+        user.atualizaDados(data);
 
-        return ResponseEntity.ok(new DataDetailingUser(usuario));
+        return ResponseEntity.ok(new DataDetailingUser(user));
     }
 }

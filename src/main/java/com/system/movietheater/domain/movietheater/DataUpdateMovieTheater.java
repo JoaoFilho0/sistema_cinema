@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 public record DataUpdateMovieTheater(
         @NotBlank
         Long id,
-        String nome,
-        DataUpdateAddress endereco
+        String name,
+        DataUpdateAddress address
 ) {
 }

@@ -21,14 +21,14 @@ public class MovieTheaterRoom {
     private Long id;
 
     @Column(name = "fk_cinema_id")
-    private Long cinema;
+    private Long movieTheater;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_salas_id")
-    private Room sala;
+    private Room room;
 
     public MovieTheaterRoom(DataRegisterMovieTheaterRoom dados) {
-        this.cinema = dados.cinema();
-        this.sala = new Room(dados.sala());
+        this.movieTheater = dados.cinema();
+        this.room = new Room(dados.sala());
     }
 }

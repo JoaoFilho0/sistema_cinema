@@ -48,16 +48,16 @@ public class MovieTheater {
     private List<Horary> horaries;
 
     public MovieTheater(DataRegisterMovieTheater data) {
-        this.name = data.nome();
-        this.address = new Address(data.endereco());
+        this.name = data.name();
+        this.address = new Address(data.address());
     }
 
-    public void atualizaDados(DataUpdateMovieTheater dados) {
+    public void atualizaDados(DataUpdateMovieTheater data) {
         if (this.name != null) {
-            this.name = dados.nome();
+            this.name = data.name();
         }
         if (this.address != null) {
-            this.address.atualizaInformacoes(dados.endereco());
+            this.address.atualizaInformacoes(data.address());
         }
     }
 }

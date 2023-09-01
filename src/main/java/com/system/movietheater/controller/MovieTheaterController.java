@@ -1,6 +1,5 @@
 package com.system.movietheater.controller;
 
-import com.sistema.cinema.domain.movietheater.*;
 import com.system.movietheater.domain.movietheater.*;
 import com.system.movietheater.domain.user.UserRepository;
 import com.system.movietheater.domain.address.AddressRepository;
@@ -30,34 +29,34 @@ public class MovieTheaterController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DataRegisterMovieTheater dados, UriComponentsBuilder uriBuilder) {
-        var cinema = new MovieTheater(dados);
-        var cliente = userRepository.getReferenceById(dados.cliente());
+    public ResponseEntity register(@RequestBody @Valid DataRegisterMovieTheater data, UriComponentsBuilder uriBuilder) {
+        var movieTheater = new MovieTheater(data);
+        var user = userRepository.getReferenceById(data.user());
 
         //todo verificar se cliente existe
-        var cinemaDados = movieTheaterRepository.save(cinema);
-        cliente.setMovieTheater(cinemaDados);
+        var movieTheaterData = movieTheaterRepository.save(movieTheater);
+        user.setMovieTheater(movieTheaterData);
 
-        userRepository.save(cliente);
+        userRepository.save(user);
 
         //todo retornar entidade salva
-        var uri = uriBuilder.path("cinema/{id}").buildAndExpand(cinema.getId()).toUri();
+        var uri = uriBuilder.path("cinema/{id}").buildAndExpand(user.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(new DataDetalingMovieTheater(cinema));
+        return ResponseEntity.created(uri).body(new DataDetalingMovieTheater(movieTheaterData));
     }
 
     @GetMapping
-    public ResponseEntity<List<DataListingMovieTheater>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
+    public ResponseEntity<List<DataListingMovieTheater>> list(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
         var page = movieTheaterRepository.findAll(paginacao).map(DataListingMovieTheater::new).toList();
         return ResponseEntity.ok(page);
     }
 
     @PutMapping
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid DataUpdateMovieTheater dados) {
-        var cinema = movieTheaterRepository.getReferenceById(dados.id());
-        cinema.atualizaDados(dados);
+    public ResponseEntity update(@RequestBody @Valid DataUpdateMovieTheater data) {
+        var movieTheater = movieTheaterRepository.getReferenceById(data.id());
+        movieTheater.atualizaDados(data);
 
-        return ResponseEntity.ok(new DataDetalingMovieTheater(cinema));
+        return ResponseEntity.ok(new DataDetalingMovieTheater(movieTheater));
     }
 }

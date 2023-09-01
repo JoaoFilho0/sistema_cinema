@@ -4,7 +4,7 @@ import com.system.movietheater.domain.session.DataSession;
 
 public record DataRegisterUserSession(
         int check,
-        Long usuario,
-        DataSession sessao
+        Long user,
+        DataSession session
 ) {
 }

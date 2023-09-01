@@ -1,6 +1,5 @@
 package com.system.movietheater.controller;
 
-import com.sistema.cinema.domain.movie.*;
 import com.system.movietheater.domain.movie.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,28 +21,28 @@ public class MovieController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DataRegisterMovie dados, UriComponentsBuilder uriBuilder) {
-        var filme = new Movie(dados);
+    public ResponseEntity register(@RequestBody @Valid DataRegisterMovie data, UriComponentsBuilder uriBuilder) {
+        var movie = new Movie(data);
 
-        movieRepository.save(filme);
+        movieRepository.save(movie);
 
         //todo verificar se o filme existe
-        var uri = uriBuilder.path("cinema/filme/{id}").buildAndExpand(filme.getId()).toUri();
+        var uri = uriBuilder.path("cinema/filme/{id}").buildAndExpand(movie.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(new DataListingMovie(filme));
+        return ResponseEntity.created(uri).body(new DataListingMovie(movie));
     }
 
     @GetMapping
-    public List<Movie> listar(@PageableDefault(size = 10, sort = "titulo") Pageable paginacao){
+    public List<Movie> list(@PageableDefault(size = 10, sort = "titulo") Pageable paginacao){
         return movieRepository.findAll(paginacao).toList();
     }
 
     @PutMapping
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid DataUpdateMovie dados) {
-        var filme = movieRepository.getReferenceById(dados.id());
-        filme.atualizaDados(dados);
+    public ResponseEntity update(@RequestBody @Valid DataUpdateMovie data) {
+        var movie = movieRepository.getReferenceById(data.id());
+        movie.atualizaDados(data);
 
-        return ResponseEntity.ok(new DataListingMovie(filme));
+        return ResponseEntity.ok(new DataListingMovie(movie));
     }
 }

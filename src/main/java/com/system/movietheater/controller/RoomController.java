@@ -1,8 +1,9 @@
 package com.system.movietheater.controller;
 
+import com.system.movietheater.domain.movietheater.MovieTheaterRepository;
+import com.system.movietheater.domain.movietheaterroom.MovieTheaterRoomRepository;
 import com.system.movietheater.domain.movietheaterroom.MovieTheaterRoom;
 import com.system.movietheater.domain.movietheaterroom.DataRegisterMovieTheaterRoom;
-import com.sistema.cinema.domain.room.*;
 import com.system.movietheater.domain.room.DataUpdateRoom;
 import com.system.movietheater.domain.room.Room;
 import com.system.movietheater.domain.room.RoomRepository;
@@ -23,34 +24,34 @@ public class RoomController {
     private RoomRepository roomRepository;
 
     @Autowired
-    private com.system.movietheater.domain.movietheater.MovieTheaterRepository movieTheaterRepository;
+    private MovieTheaterRepository movieTheaterRepository;
 
     @Autowired
-    private com.system.movietheater.domain.movietheaterroom.MovieTheaterRepository movieTheaterRepository;
+    private MovieTheaterRoomRepository movieTheaterRoomRepository;
 
     @PostMapping
     @Transactional
-    public void cadastrar(@RequestBody @Valid DataRegisterMovieTheaterRoom dados) {
-        var cinemaSalas = new MovieTheaterRoom(dados);
+    public void regiter(@RequestBody @Valid DataRegisterMovieTheaterRoom data) {
+        var movieTheaterRoom = new MovieTheaterRoom(data);
 
-        movieTheaterRepository.save(cinemaSalas);
+        movieTheaterRoomRepository.save(movieTheaterRoom);
     }
 
-    @GetMapping("/{cinema_id}")
-    public List<Room> listar(@PathVariable Long cinema_id, @PageableDefault(size = 10, sort = {"id"}) Pageable paginacao) {
+    @GetMapping("/{movie_theater_id}")
+    public List<Room> list(@PathVariable Long movie_theater_id, @PageableDefault(size = 10, sort = {"id"}) Pageable paginacao) {
         //todo verificar se o cinema existe
-        var cinema = movieTheaterRepository.getReferenceById(cinema_id);
-        var page = cinema.getSalas();
+        var movieTheater = movieTheaterRepository.getReferenceById(movie_theater_id);
+        var page = movieTheater.getRoom();
 
         return page;
     }
 
     @PutMapping
     @Transactional
-    public void atualizar(@RequestBody @Valid DataUpdateRoom dados) {
+    public void update(@RequestBody @Valid DataUpdateRoom data) {
         //todo verificar se o cinema existe
-        var sala = roomRepository.getReferenceById(dados.id());
-        sala.atualizaDados(dados);
+        var room = roomRepository.getReferenceById(data.id());
+        room.atualizaDados(data);
     }
 
 }

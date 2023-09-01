@@ -9,7 +9,7 @@ import com.system.movietheater.domain.sessionmovie.SessionMovie;
 import com.system.movietheater.domain.sessionmovie.SessionMovieRepository;
 import com.system.movietheater.domain.sessionroom.DataRegisterSessionRoom;
 import com.system.movietheater.domain.sessionroom.SessionRoom;
-import com.system.movietheater.domain.sessionroom.SessaoSalasRepository;
+import com.system.movietheater.domain.sessionroom.SessionRoomRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,23 +31,23 @@ public class SessionController {
     private SessionMovieRepository sessionMovieRepository;
 
     @Autowired
-    private SessaoSalasRepository sessaoSalasRepository;
+    private SessionRoomRepository sessionRoomRepository;
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DataRegisterSession dados, UriComponentsBuilder uriBuilder) {
-        var sessao = new Session(dados.sessao());
+    public ResponseEntity register(@RequestBody @Valid DataRegisterSession data, UriComponentsBuilder uriBuilder) {
+        var session = new Session(data.session());
 
-        var dadosSessao = sessionRepository.save(sessao);
+        var sessionData = sessionRepository.save(session);
 
         //todo verificar se a sessao existe
-        sessionMovieRepository.save(new SessionMovie(new DataRegisterSessionMovie(dadosSessao.getId(), dados.filme())));
-        sessaoSalasRepository.save(new SessionRoom(new DataRegisterSessionRoom(dadosSessao.getId(), dados.sala())));
+        sessionMovieRepository.save(new SessionMovie(new DataRegisterSessionMovie(sessionData.getId(), data.movie())));
+        sessionRoomRepository.save(new SessionRoom(new DataRegisterSessionRoom(sessionData.getId(), data.room())));
 
         //todo verificar se a sessão existe
-        var uri = uriBuilder.path("cinema/sessao/{id}").buildAndExpand(sessao.getId()).toUri();
+        var uri = uriBuilder.path("cinema/sessao/{id}").buildAndExpand(sessionData.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(new DataListingSession(sessao));
+        return ResponseEntity.created(uri).body(new DataListingSession(sessionData));
     }
 
 }
