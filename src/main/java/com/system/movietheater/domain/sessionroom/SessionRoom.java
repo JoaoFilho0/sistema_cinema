@@ -20,13 +20,13 @@ public class SessionRoom {
     private Long id;
 
     @Column(name = "fk_sessao_id")
-    private Long sessao;
+    private Long session;
 
     @Column(name = "fk_salas_id")
-    private Long sala;
+    private Long room;
 
-    public SessionRoom(DataRegisterSessionRoom dados) {
-        this.sessao = dados.sessao();;
-        this.sala = dados.sala();
+    public SessionRoom(DataRegisterSessionRoom data) {
+        this.session = data.session();;
+        this.room = data.room();
     }
 }

@@ -18,27 +18,27 @@ public class Session {
     private Long id;
 
     @Column(name = "ses_horario")
-    private String horario;
+    private String horary;
 
     @Column(name = "ses_quantidade_ingresso")
-    private int ingressos;
+    private int tickets;
 
     @Column(name = "ses_preco_ingresso")
-    private float preco;
+    private float price;
 
 
-    public Session(DataSession dados) {
-        this.horario = dados.horario();
-        this.ingressos = dados.ingressos();
-        this.preco = dados.preco();
+    public Session(DataSession data) {
+        this.horary = data.horary();
+        this.tickets = data.tickets();
+        this.price = data.price();
     }
 
-    public void atualizaDados(DataUpdateSession dados) {
-        if (dados.ingressos() > 0) {
-            this.ingressos = dados.ingressos();
+    public void updateData(DataUpdateSession data) {
+        if (data.tickets() > 0) {
+            this.tickets = data.tickets();
         }
-        if (dados.preco() != 0) {
-            this.preco = dados.preco();
+        if (data.price() != 0) {
+            this.price = data.price();
         }
     }
 }

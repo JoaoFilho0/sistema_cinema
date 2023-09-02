@@ -22,13 +22,13 @@ public class User {
     private Long id;
 
     @Column(name = "usu_nome")
-    private String nome;
+    private String name;
 
     @Column(name = "usu_email")
     private String email;
 
     @Column(name = "usu_senha")
-    private String senha;
+    private String password;
 
     @OneToOne
     @JoinColumn(name = "fk_cinema_id")
@@ -42,18 +42,18 @@ public class User {
     )
     private List<Session> session;
 
-    public User(DataRegisterUser dados) {
-        this.nome = dados.nome();
-        this.email = dados.email();
-        this.senha = dados.senha();
+    public User(DataRegisterUser data) {
+        this.name = data.name();
+        this.email = data.email();
+        this.password = data.password();
     }
 
-    public void atualizaDados(DataUpdateUser dados) {
-        if (dados.nome() != null) {
-            this.nome = dados.nome();
+    public void updateData(DataUpdateUser data) {
+        if (data.name() != null) {
+            this.name = data.name();
         }
-        if (dados.email() != null) {
-            this.email = dados.email();
+        if (data.email() != null) {
+            this.email = data.email();
         }
     }
 }

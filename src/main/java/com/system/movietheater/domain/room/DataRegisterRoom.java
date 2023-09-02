@@ -4,9 +4,9 @@ import jakarta.validation.constraints.NotNull;
 
 public record DataRegisterRoom(
         @NotNull
-        int numero,
+        int number,
         @NotNull
-        int assentos,
+        int seats,
         @NotNull
-        Long cinema) {
+        Long movieTheater) {
 }

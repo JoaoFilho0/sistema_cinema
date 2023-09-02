@@ -27,8 +27,8 @@ public class MovieTheaterRoom {
     @JoinColumn(name = "fk_salas_id")
     private Room room;
 
-    public MovieTheaterRoom(DataRegisterMovieTheaterRoom dados) {
-        this.movieTheater = dados.cinema();
-        this.room = new Room(dados.sala());
+    public MovieTheaterRoom(DataRegisterMovieTheaterRoom data) {
+        this.movieTheater = data.movieTheater();
+        this.room = new Room(data.room());
     }
 }

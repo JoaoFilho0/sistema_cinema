@@ -23,10 +23,10 @@ public class Movie {
     private Long id;
 
     @Column(name = "fil_nome")
-    private String titulo;
+    private String title;
 
     @Column(name = "fil_duracao")
-    private int duracao;
+    private int duration;
 
     @OneToMany
     @JoinTable(
@@ -36,17 +36,17 @@ public class Movie {
     )
     private List<Session> session;
 
-    public Movie(DataRegisterMovie dados) {
-        this.titulo = dados.titulo();
-        this.duracao = dados.duracao();
+    public Movie(DataRegisterMovie data) {
+        this.title = data.title();
+        this.duration = data.duration();
     }
 
-    public void atualizaDados(DataUpdateMovie dados) {
-        if(dados.titulo() != null){
-            this.titulo = dados.titulo();
+    public void updateData(DataUpdateMovie data) {
+        if(data.title() != null){
+            this.title = data.title();
         }
-        if(dados.duracao() != 0) {
-            this.duracao = dados.duracao();
+        if(data.duration() != 0) {
+            this.duration = data.duration();
         }
     }
 }

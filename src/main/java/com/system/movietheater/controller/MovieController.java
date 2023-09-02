@@ -41,7 +41,7 @@ public class MovieController {
     @Transactional
     public ResponseEntity update(@RequestBody @Valid DataUpdateMovie data) {
         var movie = movieRepository.getReferenceById(data.id());
-        movie.atualizaDados(data);
+        movie.updateData(data);
 
         return ResponseEntity.ok(new DataListingMovie(movie));
     }

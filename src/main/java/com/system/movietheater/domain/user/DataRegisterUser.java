@@ -6,12 +6,12 @@ import jakarta.validation.constraints.NotBlank;
 
 public record DataRegisterUser(
     @NotBlank
-    String nome,
+    String name,
     @NotBlank
     @Email
     String email,
     @NotBlank
-    String senha,
-    DataRegisterMovieTheater cinema
+    String password,
+    DataRegisterMovieTheater movieTheater
 ) {
 }

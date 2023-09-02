@@ -21,14 +21,14 @@ public class MovieTheaterHorary {
     private Long id;
 
     @Column(name = "fk_cinema_id")
-    private Long cinema;
+    private Long movieTheater;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_horario_id")
     private Horary horary;
 
-    public MovieTheaterHorary(DataRegisterMovieTheaterHorary dados) {
-        this.cinema = dados.cinema();
-        this.horary = new Horary(dados.horario());
+    public MovieTheaterHorary(DataRegisterMovieTheaterHorary data) {
+        this.movieTheater = data.movieTheater();
+        this.horary = new Horary(data.horary());
     }
 }

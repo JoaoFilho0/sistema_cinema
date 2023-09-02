@@ -1,4 +1,4 @@
 package com.system.movietheater.domain.sessionmovie;
 
-public record DataRegisterSessionMovie(Long sessao, Long filme) {
+public record DataRegisterSessionMovie(Long session, Long movie) {
 }

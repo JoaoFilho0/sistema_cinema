@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 public record DataUpdateMovie(
         @NotNull
         Long id,
-        String titulo,
-        int duracao
+        String title,
+        int duration
 ) {
 }

@@ -18,13 +18,13 @@ public class Horary {
     private Long id;
 
     @Column(name = "hor_dia")
-    private String dia;
+    private String day;
 
     @Column(name = "hor_horario")
-    private String horario;
+    private String horary;
 
-    public Horary(DataRegisterHorary dados) {
-        this.dia = dados.dia();
-        this.horario = dados.horario();
+    public Horary(DataRegisterHorary data) {
+        this.day = data.day();
+        this.horary = data.horary();
     }
 }

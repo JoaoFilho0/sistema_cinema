@@ -20,36 +20,36 @@ public class Address {
     private Long id;
 
     @Column(name = "end_cidade")
-    private String cidade;
+    private String city;
 
     @Column(name = "end_bairro")
-    private String bairro;
+    private String district;
 
     @Column(name = "end_rua")
-    private String rua;
+    private String street;
 
     @Column(name = "end_numero")
-    private String numero;
+    private String number;
 
     public Address(DataRegisterAddress dados){
-        this.cidade = dados.cidade();
-        this.bairro = dados.bairro();
-        this.rua = dados.rua();
-        this.numero = dados.numero();
+        this.city = dados.city();
+        this.district = dados.district();
+        this.street = dados.street();
+        this.number = dados.number();
     }
 
-    public void atualizaInformacoes(DataUpdateAddress dados) {
-        if (dados.cidade() != null) {
-            this.cidade = dados.cidade();
+    public void updateData(DataUpdateAddress data) {
+        if (data.city() != null) {
+            this.city = data.city();
         }
-        if (dados.bairro() != null) {
-            this.bairro = dados.bairro();
+        if (data.district() != null) {
+            this.district = data.district();
         }
-        if (dados.rua() != null) {
-            this.rua = dados.rua();
+        if (data.street() != null) {
+            this.street = data.street();
         }
-        if (dados.numero() != null) {
-            this.numero = dados.numero();
+        if (data.number() != null) {
+            this.number = data.number();
         }
     }
 }

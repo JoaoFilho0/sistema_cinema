@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 public record DataUpdateUser(
         @NotNull
         Long id,
-        String nome,
+        String name,
         String email,
         MovieTheater movieTheater
 ) {

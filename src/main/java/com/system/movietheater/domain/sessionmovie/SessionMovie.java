@@ -20,13 +20,13 @@ public class SessionMovie {
     private Long id;
 
     @Column(name = "fk_sessao_id")
-    private Long sessao;
+    private Long session;
 
     @Column(name = "fk_filmes_id")
-    private Long filme;
+    private Long movie;
 
-    public SessionMovie(DataRegisterSessionMovie dados) {
-        this.sessao = dados.sessao();;
-        this.filme = dados.filme();
+    public SessionMovie(DataRegisterSessionMovie data) {
+        this.session = data.session();;
+        this.movie = data.movie();
     }
 }

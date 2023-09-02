@@ -51,7 +51,7 @@ public class RoomController {
     public void update(@RequestBody @Valid DataUpdateRoom data) {
         //todo verificar se o cinema existe
         var room = roomRepository.getReferenceById(data.id());
-        room.atualizaDados(data);
+        room.updateData(data);
     }
 
 }

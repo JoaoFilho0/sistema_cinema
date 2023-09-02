@@ -56,8 +56,8 @@ public class UserController {
 
         userSessionRepository.save(userSession);
 
-        session.setIngressos(session.getIngressos() - 1);
-        session.atualizaDados(new DataUpdateSession(session.getId(), session.getIngressos(), session.getPreco()));
+        session.setTickets(session.getTickets() - 1);
+        session.updateData(new DataUpdateSession(session.getId(), session.getTickets(), session.getPrice()));
 
     }
 

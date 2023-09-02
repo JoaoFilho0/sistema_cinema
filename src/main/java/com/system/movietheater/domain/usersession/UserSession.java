@@ -22,15 +22,15 @@ public class UserSession {
     private int check;
 
     @Column(name = "fk_usuario_id")
-    private Long usuario;
+    private Long user;
 
     @OneToOne
     @JoinColumn(name = "fk_sessao_id")
     private Session session;
 
-    public UserSession(DataRegisterUserSession dados) {
-        this.check = dados.check();
-        this.usuario = dados.usuario();
-        this.session = new Session(dados.sessao());
+    public UserSession(DataRegisterUserSession data) {
+        this.check = data.check();
+        this.user = data.user();
+        this.session = new Session(data.session());
     }
 }

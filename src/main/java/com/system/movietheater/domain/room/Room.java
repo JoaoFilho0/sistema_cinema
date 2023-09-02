@@ -18,22 +18,22 @@ public class Room {
     private Long id;
 
     @Column(name = "sala_numero")
-    private int numero;
+    private int number;
 
     @Column(name = "sala_assentos")
-    private int assentos;
+    private int seats;
 
-    public Room(DataRegisterRoom dados) {
-        this.numero = dados.numero();
-        this.assentos = dados.assentos();
+    public Room(DataRegisterRoom data) {
+        this.number = data.number();
+        this.seats = data.seats();
     }
 
-    public void atualizaDados(DataUpdateRoom dados) {
-        if (this.numero != 0) {
-            this.numero = dados.numero();
+    public void updateData(DataUpdateRoom data) {
+        if (data.number() != 0) {
+            this.number = data.number();
         }
-        if (this.assentos != 0) {
-            this.assentos = dados.assentos();
+        if (data.seats() != 0) {
+            this.seats = data.seats();
         }
     }
 }

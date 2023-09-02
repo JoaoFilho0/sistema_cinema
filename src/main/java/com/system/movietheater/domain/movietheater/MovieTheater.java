@@ -52,7 +52,7 @@ public class MovieTheater {
         this.address = new Address(data.address());
     }
 
-    public void atualizaDados(DataUpdateMovieTheater data) {
+    public void updateData(DataUpdateMovieTheater data) {
         if (this.name != null) {
             this.name = data.name();
         }

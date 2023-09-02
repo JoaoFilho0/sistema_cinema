@@ -4,11 +4,11 @@ import jakarta.validation.constraints.NotBlank;
 
 public record DataRegisterAddress(
         @NotBlank
-        String cidade,
+        String city,
         @NotBlank
-        String bairro,
+        String district,
         @NotBlank
-        String rua,
-        String numero
+        String street,
+        String number
 ) {
 }
