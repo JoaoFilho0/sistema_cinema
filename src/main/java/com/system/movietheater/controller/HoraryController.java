@@ -1,8 +1,8 @@
 package com.system.movietheater.controller;
 
-import com.system.movietheater.domain.movietheaterhorary.MovieTheaterHorary;
-import com.system.movietheater.domain.movietheaterhorary.MovieTheaterHoraryRepository;
-import com.system.movietheater.domain.movietheaterhorary.DataRegisterMovieTheaterHorary;
+import com.system.movietheater.domain.horary.DataRegisterHorary;
+import com.system.movietheater.domain.horary.Horary;
+import com.system.movietheater.domain.horary.HoraryRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class HoraryController {
 
     @Autowired
-    private MovieTheaterHoraryRepository movieTheaterHoraryRepository;
+    private HoraryRepository horaryRepository;
 
     @PostMapping
     @Transactional
-    public void register(@RequestBody @Valid DataRegisterMovieTheaterHorary data) {
-        var movieTheaterHorary = new MovieTheaterHorary(data);
+    public void register(@RequestBody @Valid DataRegisterHorary data) {
+        var horary = new Horary(data);
 
-        movieTheaterHoraryRepository.save(movieTheaterHorary);
+        horaryRepository.save(horary);
     }
 }

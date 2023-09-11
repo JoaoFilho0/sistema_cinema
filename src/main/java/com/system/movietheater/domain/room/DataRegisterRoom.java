@@ -1,5 +1,6 @@
 package com.system.movietheater.domain.room;
 
+import com.system.movietheater.domain.movietheater.MovieTheater;
 import jakarta.validation.constraints.NotNull;
 
 public record DataRegisterRoom(
@@ -8,5 +9,5 @@ public record DataRegisterRoom(
         @NotNull
         int seats,
         @NotNull
-        Long movieTheater) {
+        MovieTheater movieTheater) {
 }

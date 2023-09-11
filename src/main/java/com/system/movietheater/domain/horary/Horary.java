@@ -1,5 +1,6 @@
 package com.system.movietheater.domain.horary;
 
+import com.system.movietheater.domain.movietheater.MovieTheater;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,13 @@ public class Horary {
 
     @Column(name = "hor_horario")
     private String horary;
+
+    @Column(name = "fk_cinema_id")
+    private Long movieTheaterId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "movie_theater_id", nullable = false)
+    private MovieTheater movieTheater;
 
     public Horary(DataRegisterHorary data) {
         this.day = data.day();

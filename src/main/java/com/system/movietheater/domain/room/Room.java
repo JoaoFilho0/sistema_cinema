@@ -1,7 +1,11 @@
 package com.system.movietheater.domain.room;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.system.movietheater.domain.movietheater.MovieTheater;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 
 @Table(name = "salas")
 @Entity(name = "Salas")
@@ -23,9 +27,15 @@ public class Room {
     @Column(name = "sala_assentos")
     private int seats;
 
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cin_id")
+    private MovieTheater movieTheater;
+
     public Room(DataRegisterRoom data) {
         this.number = data.number();
         this.seats = data.seats();
+        this.movieTheater = data.movieTheater();
     }
 
     public void updateData(DataUpdateRoom data) {

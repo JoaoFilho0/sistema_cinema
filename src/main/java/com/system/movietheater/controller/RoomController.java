@@ -1,18 +1,15 @@
 package com.system.movietheater.controller;
 
 import com.system.movietheater.domain.movietheater.MovieTheaterRepository;
-import com.system.movietheater.domain.movietheaterroom.MovieTheaterRoomRepository;
-import com.system.movietheater.domain.movietheaterroom.MovieTheaterRoom;
-import com.system.movietheater.domain.movietheaterroom.DataRegisterMovieTheaterRoom;
-import com.system.movietheater.domain.room.DataUpdateRoom;
-import com.system.movietheater.domain.room.Room;
-import com.system.movietheater.domain.room.RoomRepository;
+import com.system.movietheater.domain.room.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -26,22 +23,23 @@ public class RoomController {
     @Autowired
     private MovieTheaterRepository movieTheaterRepository;
 
-    @Autowired
-    private MovieTheaterRoomRepository movieTheaterRoomRepository;
-
     @PostMapping
     @Transactional
-    public void regiter(@RequestBody @Valid DataRegisterMovieTheaterRoom data) {
-        var movieTheaterRoom = new MovieTheaterRoom(data);
+    public ResponseEntity register(@RequestBody @Valid DataRegisterRoom data, UriComponentsBuilder uriBuilder) {
+        var room = new Room(data);
 
-        movieTheaterRoomRepository.save(movieTheaterRoom);
+        roomRepository.save(room);
+
+        var uri = uriBuilder.path("usuario/{id}").buildAndExpand(room.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(new DataListingRoom(room));
     }
 
     @GetMapping("/{movie_theater_id}")
-    public List<Room> list(@PathVariable Long movie_theater_id, @PageableDefault(size = 10, sort = {"id"}) Pageable paginacao) {
+    public List<Room> list(@PathVariable Long movie_theater_id, @PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {
         //todo verificar se o cinema existe
         var movieTheater = movieTheaterRepository.getReferenceById(movie_theater_id);
-        var page = movieTheater.getRoom();
+        var page = movieTheater.getRooms();
 
         return page;
     }

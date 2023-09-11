@@ -1,5 +1,6 @@
 package com.system.movietheater.domain.session;
 
+import com.system.movietheater.domain.movie.Movie;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,9 @@ public class Session {
     @Column(name = "ses_preco_ingresso")
     private float price;
 
+    @ManyToOne
+    @JoinColumn(name = "sessao_id", nullable = false)
+    private Movie movie;
 
     public Session(DataSession data) {
         this.horary = data.horary();

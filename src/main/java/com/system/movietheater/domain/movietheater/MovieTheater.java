@@ -1,5 +1,7 @@
 package com.system.movietheater.domain.movietheater;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.system.movietheater.domain.address.Address;
 import com.system.movietheater.domain.horary.Horary;
 import com.system.movietheater.domain.room.Room;
@@ -9,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "cinema")
@@ -17,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class MovieTheater {
+public class    MovieTheater {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,20 +34,11 @@ public class MovieTheater {
     @JoinColumn(name = "fk_endereco_id")
     private Address address;
 
-    @OneToMany
-    @JoinTable(
-            name = "cinema_salas",
-            joinColumns = @JoinColumn(name = "fk_cinema_id"),
-            inverseJoinColumns = @JoinColumn(name = "fk_salas_id")
-    )
-    private List<Room> room;
 
-    @OneToMany
-    @JoinTable(
-            name = "cinema_horario",
-            joinColumns = @JoinColumn(name = "fk_cinema_id"),
-            inverseJoinColumns = @JoinColumn(name = "fk_horario_id")
-    )
+    @OneToMany(mappedBy = "movieTheater")
+    private List<Room> rooms;
+
+    @OneToMany(mappedBy = "movieTheater", fetch = FetchType.EAGER)
     private List<Horary> horaries;
 
     public MovieTheater(DataRegisterMovieTheater data) {
@@ -57,7 +51,7 @@ public class MovieTheater {
             this.name = data.name();
         }
         if (this.address != null) {
-            this.address.atualizaInformacoes(data.address());
+            this.address.updateData(data.address());
         }
     }
 }

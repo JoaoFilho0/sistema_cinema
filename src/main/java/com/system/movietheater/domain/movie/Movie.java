@@ -28,12 +28,7 @@ public class Movie {
     @Column(name = "fil_duracao")
     private int duration;
 
-    @OneToMany
-    @JoinTable(
-            name = "sessao_filmes",
-            joinColumns = @JoinColumn(name = "fk_sessao_id"),
-            inverseJoinColumns = @JoinColumn(name = "fk_filmes_id")
-    )
+    @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
     private List<Session> session;
 
     public Movie(DataRegisterMovie data) {
