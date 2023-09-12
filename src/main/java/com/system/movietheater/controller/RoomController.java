@@ -2,10 +2,12 @@ package com.system.movietheater.controller;
 
 import com.system.movietheater.domain.movietheater.MovieTheaterRepository;
 import com.system.movietheater.domain.room.*;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -36,12 +38,11 @@ public class RoomController {
     }
 
     @GetMapping("/{movie_theater_id}")
-    public List<Room> list(@PathVariable Long movie_theater_id, @PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {
-        //todo verificar se o cinema existe
-        var movieTheater = movieTheaterRepository.getReferenceById(movie_theater_id);
+    public ResponseEntity<List<Room>> list(@PathVariable Long movie_theater_id, @PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {
+        var movieTheater = movieTheaterRepository.findById(movie_theater_id).orElseThrow(() -> new EntityNotFoundException("Movie Theater not found"));
         var page = movieTheater.getRooms();
 
-        return page;
+        return ResponseEntity.ok(page);
     }
 
     @PutMapping
