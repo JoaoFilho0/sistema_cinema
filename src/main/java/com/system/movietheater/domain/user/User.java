@@ -34,6 +34,9 @@ public class User implements UserDetails {
     @Column(name = "usu_senha")
     private String password;
 
+    @Column(name = "usu_ativo")
+    private Boolean active = true;
+
     @OneToOne
     @JoinColumn(name = "fk_cinema_id")
     private MovieTheater movieTheater;
@@ -59,6 +62,14 @@ public class User implements UserDetails {
         if (data.email() != null) {
             this.email = data.email();
         }
+    }
+
+    public void disableAccount() {
+        this.active = false;
+    }
+
+    public void activeAccount() {
+        this.active = true;
     }
 
     @Override

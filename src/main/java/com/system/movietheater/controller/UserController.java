@@ -67,7 +67,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<DataListingUser>> list(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
-         var list = userRepository.findAll().stream().map(DataListingUser::new).toList();
+         var list = userRepository.findByActiveTrue();
 
          return ResponseEntity.ok(list);
     }
@@ -81,9 +81,9 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity select(@PathVariable Long id) {
-        var user = userRepository.getReferenceById(id);
+        var user = userRepository.findAll();
 
-        return ResponseEntity.ok(new DataDetailingUser(user));
+        return ResponseEntity.ok(user);
     }
 
     @PutMapping
@@ -94,4 +94,33 @@ public class UserController {
 
         return ResponseEntity.ok(new DataDetailingUser(user));
     }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity delete(@PathVariable Long id) {
+        var user = userRepository.getReferenceById(id);
+
+        if(user.getActive()) {
+            user.disableAccount();
+
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().body("Account already deactivated");
+        }
+    }
+
+    @PutMapping("/ativar/{id}")
+    @Transactional
+    public ResponseEntity activeAccoun(@PathVariable Long id) {
+        var user = userRepository.getReferenceById(id);
+
+        if(!user.getActive()) {
+            user.activeAccount();
+
+            return ResponseEntity.ok(new DataDetailingUser(user));
+        } else {
+            return ResponseEntity.badRequest().body("Account already active");
+        }
+    }
+
 }

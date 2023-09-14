@@ -1,6 +1,8 @@
 package com.system.movietheater.controller;
 
 import com.system.movietheater.domain.movietheater.*;
+import com.system.movietheater.domain.user.DataListingUser;
+import com.system.movietheater.domain.user.User;
 import com.system.movietheater.domain.user.UserRepository;
 import com.system.movietheater.domain.address.AddressRepository;
 import jakarta.validation.Valid;
@@ -46,9 +48,16 @@ public class MovieTheaterController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DataListingMovieTheater>> list(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
-        var page = movieTheaterRepository.findAll(paginacao).map(DataListingMovieTheater::new).toList();
-        return ResponseEntity.ok(page);
+    public ResponseEntity<List<MovieTheater>> list(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
+        List<User> users = userRepository.findByActiveTrueAndMovieTheaterNotNull();
+
+        var movieTheaters = users.stream().map(MovieTheater::new).toList();
+
+        if(!movieTheaters.isEmpty()) {
+            return ResponseEntity.ok(movieTheaters);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
     }
 
     @PutMapping

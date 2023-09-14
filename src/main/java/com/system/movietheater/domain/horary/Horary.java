@@ -24,11 +24,8 @@ public class Horary {
     @Column(name = "hor_horario")
     private String horary;
 
-    @Column(name = "fk_cinema_id")
-    private Long movieTheaterId;
-
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "movie_theater_id", nullable = false)
+    @JoinColumn(name = "fk_cinema_id", nullable = false)
     private MovieTheater movieTheater;
 
     public Horary(DataRegisterHorary data) {
