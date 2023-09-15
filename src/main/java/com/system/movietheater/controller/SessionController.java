@@ -1,9 +1,6 @@
 package com.system.movietheater.controller;
 
-import com.system.movietheater.domain.session.DataRegisterSession;
-import com.system.movietheater.domain.session.DataListingSession;
-import com.system.movietheater.domain.session.Session;
-import com.system.movietheater.domain.session.SessionRepository;
+import com.system.movietheater.domain.session.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,19 +16,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class SessionController {
 
     @Autowired
-    private SessionRepository sessionRepository;
+    private SessionService sessionService;
 
     @PostMapping
     @Transactional
-    public ResponseEntity register(@RequestBody @Valid DataRegisterSession data, UriComponentsBuilder uriBuilder) {
-        var session = new Session(data.session());
+    public ResponseEntity<DataListingSession> register(@RequestBody @Valid DataRegisterSession data, UriComponentsBuilder uriBuilder) {
+        var session = new Session(sessionService.registerSession(data));
 
-        var sessionData = sessionRepository.save(session);
-
-        //todo verificar se a sessão existe
-        var uri = uriBuilder.path("cinema/sessao/{id}").buildAndExpand(sessionData.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new DataListingSession(sessionData));
+        return ResponseEntity.created(sessionService.generateUri(session, uriBuilder)).body(new DataListingSession(session));
     }
 
 }

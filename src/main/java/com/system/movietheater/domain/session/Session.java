@@ -37,6 +37,14 @@ public class Session {
         this.price = data.price();
     }
 
+    public Session(Session session) {
+        this.id = session.getId();
+        this.horary = session.getHorary();
+        this.tickets = session.getTickets();
+        this.price = session.getPrice();
+        this.movie = session.getMovie();
+    }
+
     public void updateData(DataUpdateSession data) {
         if (data.tickets() > 0) {
             this.tickets = data.tickets();
