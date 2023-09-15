@@ -19,30 +19,25 @@ public class MovieController {
     @Autowired
     private MovieRepository movieRepository;
 
+    @Autowired
+    private MovieService movieService;
+
     @PostMapping
     @Transactional
-    public ResponseEntity register(@RequestBody @Valid DataRegisterMovie data, UriComponentsBuilder uriBuilder) {
-        var movie = new Movie(data);
+    public ResponseEntity<DataListingMovie> register(@RequestBody @Valid DataRegisterMovie data, UriComponentsBuilder uriBuilder) {
+        var movie = new Movie(movieService.registerMovie(data));
 
-        movieRepository.save(movie);
-
-        //todo verificar se o filme existe
-        var uri = uriBuilder.path("cinema/filme/{id}").buildAndExpand(movie.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new DataListingMovie(movie));
+        return ResponseEntity.created(movieService.generateUri(movie, uriBuilder)).body(new DataListingMovie(movie));
     }
 
     @GetMapping
-    public List<Movie> list(@PageableDefault(size = 10, sort = "titulo") Pageable paginacao){
-        return movieRepository.findAll(paginacao).toList();
+    public ResponseEntity<List<Movie>> list(@PageableDefault(size = 10, sort = "titulo") Pageable pagination){
+        return ResponseEntity.ok(movieService.listMovies(pagination));
     }
 
     @PutMapping
     @Transactional
-    public ResponseEntity update(@RequestBody @Valid DataUpdateMovie data) {
-        var movie = movieRepository.getReferenceById(data.id());
-        movie.updateData(data);
-
-        return ResponseEntity.ok(new DataListingMovie(movie));
+    public ResponseEntity<DataListingMovie> update(@RequestBody @Valid DataUpdateMovie data) {
+        return ResponseEntity.ok(new DataListingMovie(movieService.updateMovie(data)));
     }
 }

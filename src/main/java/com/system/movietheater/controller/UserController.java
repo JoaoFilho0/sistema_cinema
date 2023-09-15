@@ -1,7 +1,5 @@
 package com.system.movietheater.controller;
 
-import com.system.movietheater.domain.movietheater.MovieTheater;
-import com.system.movietheater.domain.movietheater.MovieTheaterRepository;
 import com.system.movietheater.domain.session.DataUpdateSession;
 import com.system.movietheater.domain.session.SessionRepository;
 import com.system.movietheater.domain.user.*;
@@ -10,7 +8,6 @@ import com.system.movietheater.domain.usersession.UserSession;
 import com.system.movietheater.domain.usersession.UserSessionRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -28,27 +22,20 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private MovieTheaterRepository movieTheaterRepository;
-
-    @Autowired
     private SessionRepository sessionRepository;
 
     @Autowired
     private UserSessionRepository userSessionRepository;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping
     @Transactional
-    public ResponseEntity register(@RequestBody @Valid DataRegisterUser data, UriComponentsBuilder uriBuilder) {
-        var user = new User(data);
+    public ResponseEntity<DataDetailingUser> register(@RequestBody @Valid DataRegisterUser data, UriComponentsBuilder uriBuilder) {
+        var user = new User(userService.register(data));
 
-        userRepository.save(user);
-
-        var uri = uriBuilder.path("usuario/{id}").buildAndExpand(user.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new DataDetailingUser(user));
+        return ResponseEntity.created(userService.generateUri(user, uriBuilder)).body(new DataDetailingUser(user));
     }
 
     @PostMapping("/sessao")
@@ -67,60 +54,30 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<DataListingUser>> list(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
-         var list = userRepository.findByActiveTrue();
-
-         return ResponseEntity.ok(list);
-    }
-
-    @GetMapping("/movietheater")
-    public ResponseEntity<List<MovieTheater>> listMovieTheater(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
-        var list = movieTheaterRepository.findAll();
-
-        return ResponseEntity.ok(list);
+         return ResponseEntity.ok(userService.listUsers());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity select(@PathVariable Long id) {
-        var user = userRepository.findAll();
-
-        return ResponseEntity.ok(user);
+    public ResponseEntity<DataDetailingUser> select(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.selectUser(id));
     }
 
     @PutMapping
     @Transactional
-    public ResponseEntity update(@RequestBody @Valid DataUpdateUser data) {
-        var user = userRepository.getReferenceById(data.id());
-        user.updateData(data);
-
-        return ResponseEntity.ok(new DataDetailingUser(user));
+    public ResponseEntity<DataDetailingUser> update(@RequestBody @Valid DataUpdateUser data) {
+        return ResponseEntity.ok(new DataDetailingUser(userService.updateUser(data)));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity delete(@PathVariable Long id) {
-        var user = userRepository.getReferenceById(id);
-
-        if(user.getActive()) {
-            user.disableAccount();
-
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.badRequest().body("Account already deactivated");
-        }
+    public ResponseEntity<DataDetailingUser> disableAccount(@PathVariable Long id) {
+        return ResponseEntity.ok(new DataDetailingUser(userService.disableAccount(id)));
     }
 
     @PutMapping("/ativar/{id}")
     @Transactional
-    public ResponseEntity activeAccoun(@PathVariable Long id) {
-        var user = userRepository.getReferenceById(id);
-
-        if(!user.getActive()) {
-            user.activeAccount();
-
-            return ResponseEntity.ok(new DataDetailingUser(user));
-        } else {
-            return ResponseEntity.badRequest().body("Account already active");
-        }
+    public ResponseEntity<DataDetailingUser> activeAccount(@PathVariable Long id) {
+        return ResponseEntity.ok(new DataDetailingUser(userService.activeAccount(id)));
     }
 
 }

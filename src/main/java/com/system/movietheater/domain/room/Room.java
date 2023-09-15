@@ -38,6 +38,13 @@ public class Room {
         this.movieTheater = data.movieTheater();
     }
 
+    public Room(Room room) {
+        this.id = room.getId();
+        this.number = room.getNumber();
+        this.seats = room.getSeats();
+        this.movieTheater = room.getMovieTheater();
+    }
+
     public void updateData(DataUpdateRoom data) {
         if (data.number() != 0) {
             this.number = data.number();

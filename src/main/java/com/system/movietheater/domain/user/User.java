@@ -55,6 +55,14 @@ public class User implements UserDetails {
         this.password = data.password();
     }
 
+    public User(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.active = user.getActive();
+        this.movieTheater = user.getMovieTheater();
+    }
+
     public void updateData(DataUpdateUser data) {
         if (data.name() != null) {
             this.name = data.name();

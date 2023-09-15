@@ -36,6 +36,12 @@ public class Movie {
         this.duration = data.duration();
     }
 
+    public Movie(Movie movie) {
+        this.id = movie.getId();
+        this.title = movie.getTitle();
+        this.duration = movie.duration;
+    }
+
     public void updateData(DataUpdateMovie data) {
         if(data.title() != null){
             this.title = data.title();

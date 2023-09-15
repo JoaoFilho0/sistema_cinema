@@ -35,7 +35,6 @@ public class    MovieTheater {
     @JoinColumn(name = "fk_endereco_id")
     private Address address;
 
-
     @OneToMany(mappedBy = "movieTheater")
     private List<Room> rooms;
 
@@ -53,6 +52,14 @@ public class    MovieTheater {
         this.address = user.getMovieTheater().getAddress();
         this.rooms = user.getMovieTheater().getRooms();
         this.horaries = user.getMovieTheater().getHoraries();
+    }
+
+    public MovieTheater(MovieTheater movieTheater) {
+        this.id = movieTheater.getId();
+        this.name = movieTheater.getName();
+        this.address = movieTheater.getAddress();
+        this.rooms = movieTheater.getRooms();
+        this.horaries = movieTheater.getHoraries();
     }
 
     public void updateData(DataUpdateMovieTheater data) {
