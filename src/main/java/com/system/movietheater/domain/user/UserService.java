@@ -3,6 +3,7 @@ package com.system.movietheater.domain.user;
 import com.system.movietheater.infra.exception.BadRequestException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -15,12 +16,21 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public User register(DataRegisterUser data) {
         var user = new User(data);
+        var password = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(password);
 
         userRepository.save(user);
 
         return user;
+    }
+
+    public URI generateUri(User user, UriComponentsBuilder uriBuilder) {
+        return uriBuilder.path("usuario/{id}").buildAndExpand(user.getId()).toUri();
     }
 
     public List<DataListingUser> listUsers() {
@@ -31,10 +41,6 @@ public class UserService {
         var user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         return new DataDetailingUser(user);
-    }
-
-    public URI generateUri(User user, UriComponentsBuilder uriBuilder) {
-        return uriBuilder.path("usuario/{id}").buildAndExpand(user.getId()).toUri();
     }
 
     public User updateUser(DataUpdateUser data) {

@@ -4,12 +4,15 @@ import com.system.movietheater.domain.movietheater.MovieTheater;
 import com.system.movietheater.domain.session.Session;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Table(name = "usuario")
 @Entity(name = "Usuario")
@@ -49,10 +52,16 @@ public class User implements UserDetails {
     )
     private List<Session> session;
 
+    @Column(name = "usu_tipo")
+    @Enumerated(EnumType.STRING)
+    @ElementCollection
+    private Set<ProfileUser> type;
+
     public User(DataRegisterUser data) {
         this.name = data.name();
         this.email = data.email();
         this.password = data.password();
+        this.type = Set.of(ProfileUser.USER);
     }
 
     public User(User user) {
@@ -82,7 +91,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return type.stream()
+                .map(p -> new SimpleGrantedAuthority(p.name()))
+                .collect(Collectors.toSet());
     }
 
     @Override
