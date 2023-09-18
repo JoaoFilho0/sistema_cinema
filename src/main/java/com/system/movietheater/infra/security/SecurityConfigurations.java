@@ -29,7 +29,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers(HttpMethod.POST, "/login").permitAll();
                     req.requestMatchers(HttpMethod.POST, "/usuario").permitAll();
-                    req.requestMatchers(HttpMethod.GET, "/usuario").hasRole("USER");
+                    req.requestMatchers(HttpMethod.GET, "/usuario").hasRole("ADMIN");
                     req.requestMatchers(HttpMethod.POST, "/cinema").hasRole("USER");
                     req.anyRequest().authenticated();
                 })

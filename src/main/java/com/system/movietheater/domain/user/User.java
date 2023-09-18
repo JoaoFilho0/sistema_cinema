@@ -11,8 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Table(name = "usuario")
 @Entity(name = "Usuario")
@@ -21,6 +19,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Builder
 public class User implements UserDetails {
 
     @Id
@@ -54,14 +53,13 @@ public class User implements UserDetails {
 
     @Column(name = "usu_tipo")
     @Enumerated(EnumType.STRING)
-    @ElementCollection
-    private Set<ProfileUser> type;
+    private List<ProfileUser> type;
 
     public User(DataRegisterUser data) {
         this.name = data.name();
         this.email = data.email();
         this.password = data.password();
-        this.type = Set.of(ProfileUser.USER);
+        this.type = List.of(ProfileUser.ROLE_USER);
     }
 
     public User(User user) {
@@ -93,7 +91,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return type.stream()
                 .map(p -> new SimpleGrantedAuthority(p.name()))
-                .collect(Collectors.toSet());
+                .toList();
     }
 
     @Override
