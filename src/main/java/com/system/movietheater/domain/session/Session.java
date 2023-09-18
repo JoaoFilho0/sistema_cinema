@@ -1,6 +1,7 @@
 package com.system.movietheater.domain.session;
 
 import com.system.movietheater.domain.movie.Movie;
+import com.system.movietheater.domain.room.Room;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,13 +29,19 @@ public class Session {
     private float price;
 
     @ManyToOne
-    @JoinColumn(name = "sessao_id", nullable = false)
+    @JoinColumn(name = "fk_filme_id", nullable = false)
     private Movie movie;
 
-    public Session(DataSession data) {
+    @ManyToOne
+    @JoinColumn(name = "fk_sala_id")
+    private Room room;
+
+    public Session(DataRegisterSession data) {
         this.horary = data.horary();
         this.tickets = data.tickets();
         this.price = data.price();
+        this.movie = data.movie();
+        this.room = data.room();
     }
 
     public Session(Session session) {
@@ -43,6 +50,16 @@ public class Session {
         this.tickets = session.getTickets();
         this.price = session.getPrice();
         this.movie = session.getMovie();
+        this.room = session.getRoom();
+    }
+
+    public Session(DataListingSession session) {
+        this.id = session.id();
+        this.horary = session.horary();
+        this.tickets = session.tickets();
+        this.price = session.price();
+        this.movie = session.movie();
+        this.room = session.room();
     }
 
     public void updateData(DataUpdateSession data) {

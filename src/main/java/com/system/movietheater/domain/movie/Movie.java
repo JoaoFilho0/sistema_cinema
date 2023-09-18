@@ -1,5 +1,6 @@
 package com.system.movietheater.domain.movie;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.system.movietheater.domain.session.Session;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,7 @@ public class Movie {
     @Column(name = "fil_duracao")
     private int duration;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
     private List<Session> session;
 

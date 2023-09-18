@@ -29,6 +29,10 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers(HttpMethod.POST, "/login").permitAll();
                     req.requestMatchers(HttpMethod.POST, "/usuario").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/cinema").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/cinema/filme").permitAll();
+                    req.requestMatchers(HttpMethod.PUT, "/usuario").hasRole("USER");
+                    req.requestMatchers(HttpMethod.DELETE, "/usuario").hasRole("USER");
                     req.requestMatchers(HttpMethod.GET, "/usuario").hasRole("ADMIN");
                     req.requestMatchers(HttpMethod.POST, "/cinema").hasRole("USER");
                     req.anyRequest().authenticated();

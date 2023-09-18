@@ -31,11 +31,11 @@ public class Address {
     @Column(name = "end_numero")
     private String number;
 
-    public Address(DataRegisterAddress dados){
-        this.city = dados.city();
-        this.district = dados.district();
-        this.street = dados.street();
-        this.number = dados.number();
+    public Address(DataRegisterAddress data){
+        this.city = data.city();
+        this.district = data.district();
+        this.street = data.street();
+        this.number = data.number();
     }
 
     public void updateData(DataUpdateAddress data) {

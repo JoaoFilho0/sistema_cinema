@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @Service
 public class SessionService {
@@ -13,7 +14,7 @@ public class SessionService {
     private SessionRepository sessionRepository;
 
     public Session registerSession(DataRegisterSession data) {
-        var session = new Session(data.session());
+        var session = new Session(data);
 
         sessionRepository.save(session);
 
@@ -22,5 +23,9 @@ public class SessionService {
 
     public URI generateUri(Session session, UriComponentsBuilder uriBuilder) {
         return uriBuilder.path("cinema/sessao/{id}").buildAndExpand(session.getId()).toUri();
+    }
+
+    public List<DataListingSession> list() {
+        return sessionRepository.findAll().stream().map(DataListingSession::new).toList();
     }
 }

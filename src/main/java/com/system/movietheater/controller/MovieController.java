@@ -31,7 +31,7 @@ public class MovieController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Movie>> list(@PageableDefault(size = 10, sort = "titulo") Pageable pagination){
+    public ResponseEntity<List<Movie>> list(@PageableDefault(size = 10, sort = "title") Pageable pagination){
         return ResponseEntity.ok(movieService.listMovies(pagination));
     }
 

@@ -29,8 +29,12 @@ public class UserSession {
     private Session session;
 
     public UserSession(DataRegisterUserSession data) {
-        this.check = data.check();
+        this.check = 1;
         this.user = data.user();
         this.session = new Session(data.session());
+    }
+
+    public void sessionCheck() {
+        this.check = 2;
     }
 }

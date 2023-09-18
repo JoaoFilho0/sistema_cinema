@@ -1,5 +1,6 @@
 package com.system.movietheater.domain.horary;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.system.movietheater.domain.movietheater.MovieTheater;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,6 +25,7 @@ public class Horary {
     @Column(name = "hor_horario")
     private String horary;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_cinema_id", nullable = false)
     private MovieTheater movieTheater;
@@ -31,5 +33,6 @@ public class Horary {
     public Horary(DataRegisterHorary data) {
         this.day = data.day();
         this.horary = data.horary();
+        this.movieTheater = data.movieTheater();
     }
 }
