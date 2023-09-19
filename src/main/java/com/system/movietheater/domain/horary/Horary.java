@@ -35,4 +35,13 @@ public class Horary {
         this.horary = data.horary();
         this.movieTheater = data.movieTheater();
     }
+
+    public void updateData(DataUpdateHorary data) {
+        if(data.day() != null) {
+            this.day = data.day();
+        }
+        if (data.horary() != null) {
+            this.horary = data.horary();
+        }
+    }
 }
