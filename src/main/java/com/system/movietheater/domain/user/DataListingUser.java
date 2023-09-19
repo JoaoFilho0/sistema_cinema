@@ -1,7 +1,5 @@
 package com.system.movietheater.domain.user;
 
-import com.system.movietheater.domain.movietheater.MovieTheater;
-
 public record DataListingUser(Long id, String name, String email) {
 
     public DataListingUser(User user) {

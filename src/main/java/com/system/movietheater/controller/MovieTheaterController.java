@@ -1,8 +1,6 @@
 package com.system.movietheater.controller;
 
 import com.system.movietheater.domain.movietheater.*;
-import com.system.movietheater.domain.user.UserRepository;
-import com.system.movietheater.domain.address.AddressRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

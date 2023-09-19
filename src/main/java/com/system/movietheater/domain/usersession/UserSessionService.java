@@ -4,7 +4,6 @@ import com.system.movietheater.domain.session.DataUpdateSession;
 import com.system.movietheater.domain.session.SessionRepository;
 import com.system.movietheater.domain.user.User;
 import com.system.movietheater.domain.user.UserRepository;
-import com.system.movietheater.domain.user.UserService;
 import com.system.movietheater.infra.exception.UserNotFoundExcpetion;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @Service
 public class UserSessionService {

@@ -1,11 +1,13 @@
 package com.system.movietheater.controller;
 
 import com.system.movietheater.domain.session.DataListingSession;
-import com.system.movietheater.domain.session.DataUpdateSession;
 import com.system.movietheater.domain.session.Session;
 import com.system.movietheater.domain.session.SessionRepository;
 import com.system.movietheater.domain.user.*;
-import com.system.movietheater.domain.usersession.*;
+import com.system.movietheater.domain.usersession.DataRegisterUserSession;
+import com.system.movietheater.domain.usersession.DataReturnUserSession;
+import com.system.movietheater.domain.usersession.UserSessionRepository;
+import com.system.movietheater.domain.usersession.UserSessionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

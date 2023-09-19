@@ -4,7 +4,6 @@ import com.system.movietheater.domain.movietheater.MovieTheater;
 import com.system.movietheater.domain.session.Session;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

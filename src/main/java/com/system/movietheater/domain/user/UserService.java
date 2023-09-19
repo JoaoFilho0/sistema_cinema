@@ -3,11 +3,7 @@ package com.system.movietheater.domain.user;
 import com.system.movietheater.infra.exception.BadRequestException;
 import com.system.movietheater.infra.exception.UserNotFoundExcpetion;
 import com.system.movietheater.infra.security.SecurityConfigurations;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 

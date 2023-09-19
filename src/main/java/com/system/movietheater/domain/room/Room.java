@@ -1,11 +1,9 @@
 package com.system.movietheater.domain.room;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.system.movietheater.domain.movietheater.MovieTheater;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
 
 @Table(name = "salas")
 @Entity(name = "Salas")

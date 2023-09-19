@@ -1,7 +1,5 @@
 package com.system.movietheater.domain.movietheater;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.system.movietheater.domain.address.Address;
 import com.system.movietheater.domain.horary.Horary;
 import com.system.movietheater.domain.room.Room;
@@ -12,7 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "cinema")
