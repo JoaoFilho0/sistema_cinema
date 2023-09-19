@@ -1,6 +1,7 @@
 package com.system.movietheater.domain.usersession;
 
 import com.system.movietheater.domain.session.Session;
+import com.system.movietheater.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,17 +22,18 @@ public class UserSession {
     @Column(name = "usu_ses_check")
     private int check;
 
-    @Column(name = "fk_usuario_id")
-    private Long user;
+    @ManyToOne
+    @JoinColumn(name = "fk_usuario_id")
+    private User user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "fk_sessao_id")
     private Session session;
 
     public UserSession(DataRegisterUserSession data) {
         this.check = 1;
         this.user = data.user();
-        this.session = new Session(data.session());
+        this.session = data.session();
     }
 
     public void sessionCheck() {

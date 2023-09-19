@@ -1,5 +1,6 @@
 package com.system.movietheater.domain.movie;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class MovieService {
     }
 
     public Movie updateMovie(DataUpdateMovie data) {
-        var movie = movieRepository.getReferenceById(data.id());
+        var movie = movieRepository.findById(data.id()).orElseThrow(() -> new EntityNotFoundException("Movie not found"));
         movie.updateData(data);
 
         return movie;

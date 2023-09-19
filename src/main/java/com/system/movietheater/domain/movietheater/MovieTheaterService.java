@@ -2,6 +2,7 @@ package com.system.movietheater.domain.movietheater;
 
 import com.system.movietheater.domain.user.User;
 import com.system.movietheater.domain.user.UserRepository;
+import com.system.movietheater.infra.exception.UserNotFoundExcpetion;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class MovieTheaterService {
 
     public MovieTheater register(DataRegisterMovieTheater data) {
         var movieTheater = new MovieTheater(data);
-        var user = userRepository.findById(data.user()).orElseThrow(() -> new EntityNotFoundException("User not exists"));
+        var user = userRepository.findById(data.user()).orElseThrow(() -> new UserNotFoundExcpetion("User not found"));
 
         var movieTheaterData = movieTheaterRepository.save(movieTheater);
         user.setMovieTheater(movieTheaterData);
@@ -32,6 +33,8 @@ public class MovieTheaterService {
     }
 
     public URI generateUri(MovieTheater movieTheater, UriComponentsBuilder uriBuilder) {
+        movieTheaterRepository.findById(movieTheater.getId()).orElseThrow(() -> new EntityNotFoundException("Movie theater not found"));
+
         return uriBuilder.path("cinema/{id}").buildAndExpand(movieTheater.getId()).toUri();
     }
 
@@ -42,11 +45,11 @@ public class MovieTheaterService {
     }
 
     public MovieTheater selectMovieTheater(Long id) {
-        return movieTheaterRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Movie theater not exists"));
+        return movieTheaterRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Movie theater not found"));
     }
 
     public MovieTheater updateMovieTheater(DataUpdateMovieTheater data) {
-        var movieTheater = movieTheaterRepository.getReferenceById(data.id());
+        var movieTheater = movieTheaterRepository.findById(data.id()).orElseThrow(() -> new EntityNotFoundException(("Movie theater not found")));
         movieTheater.updateData(data);
 
         return movieTheater;

@@ -37,7 +37,7 @@ public class RoomService {
     }
 
     public Room updateRoom(DataUpdateRoom data) {
-        var room = roomRepository.findById(data.id()).orElseThrow(() -> new EntityNotFoundException("Room not exists"));
+        var room = roomRepository.findById(data.id()).orElseThrow(() -> new EntityNotFoundException("Room not found"));
         room.updateData(data);
 
         return room;

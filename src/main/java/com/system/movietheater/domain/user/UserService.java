@@ -1,6 +1,7 @@
 package com.system.movietheater.domain.user;
 
 import com.system.movietheater.infra.exception.BadRequestException;
+import com.system.movietheater.infra.exception.UserNotFoundExcpetion;
 import com.system.movietheater.infra.security.SecurityConfigurations;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,6 @@ public class UserService {
     }
 
     public void registerAdm(User user) {
-        System.out.println(user.toString());
         var password = securityConfigurations.passwordEncoder().encode(user.getPassword());
         user.setPassword(password);
 
@@ -49,20 +49,20 @@ public class UserService {
     }
 
     public DataDetailingUser selectUser(Long id) {
-        var user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        var user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundExcpetion("User not found"));
 
         return new DataDetailingUser(user);
     }
 
     public User updateUser(DataUpdateUser data) {
-        var user = userRepository.getReferenceById(data.id());
+        var user = userRepository.findById(data.id()).orElseThrow(() -> new UserNotFoundExcpetion("User not found"));
         user.updateData(data);
 
         return user;
     }
 
     public User activeAccount(Long id) {
-        var user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        var user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundExcpetion("User not found"));
 
         if(user.getActive()){
             throw new BadRequestException("User account actived");
@@ -74,7 +74,7 @@ public class UserService {
     }
 
     public User disableAccount(Long id) {
-        var user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        var user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundExcpetion("User not found"));
 
         if(!user.getActive()) {
             throw new BadRequestException("User account disabled");

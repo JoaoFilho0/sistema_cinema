@@ -1,11 +1,11 @@
 package com.system.movietheater.controller;
 
+import com.system.movietheater.domain.session.DataListingSession;
 import com.system.movietheater.domain.session.DataUpdateSession;
+import com.system.movietheater.domain.session.Session;
 import com.system.movietheater.domain.session.SessionRepository;
 import com.system.movietheater.domain.user.*;
-import com.system.movietheater.domain.usersession.DataRegisterUserSession;
-import com.system.movietheater.domain.usersession.UserSession;
-import com.system.movietheater.domain.usersession.UserSessionRepository;
+import com.system.movietheater.domain.usersession.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +30,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserSessionService userSessionService;
+
     @PostMapping
     @Transactional
     public ResponseEntity<DataDetailingUser> register(@RequestBody @Valid DataRegisterUser data, UriComponentsBuilder uriBuilder) {
@@ -40,16 +43,15 @@ public class UserController {
 
     @PostMapping("/sessao")
     @Transactional
-    public void registerUserSession(@RequestBody @Valid DataRegisterUserSession data, UriComponentsBuilder uriBuilder) {
-        var userSession = new UserSession(data);
-        var session = sessionRepository.getReferenceById(data.session().id());
+    public ResponseEntity<DataReturnUserSession> registerUserSession(@RequestBody @Valid DataRegisterUserSession data, UriComponentsBuilder uriBuilder) {
+        var userSession = userSessionService.registerUserSession(data);
 
-        userSession.setSession(session);
+        return ResponseEntity.created(userSessionService.generateUri(userSession, uriBuilder)).body(new DataReturnUserSession(new DataListingUser(userSession.getUser()), new DataListingSession(userSession.getSession())));
+    }
 
-        userSessionRepository.save(userSession);
-
-        session.setTickets(session.getTickets() - 1);
-        session.updateData(new DataUpdateSession(session.getId(), session.getTickets(), session.getPrice()));
+    @GetMapping("{id}/sessao")
+    public ResponseEntity<List<Session>> listUserSessionByUserId(@PathVariable Long id) {
+        return ResponseEntity.ok(userSessionService.listingUserSessionPerUser(id).getSession());
     }
 
     @GetMapping
