@@ -25,9 +25,8 @@ public class UserSessionService {
     private UserRepository userRepository;
 
     public UserSession registerUserSession(DataRegisterUserSession data) {
-        var session = sessionRepository.findById(data.session().getId()).orElseThrow(EntityNotFoundException::new);
+        var session = sessionRepository.findById(data.session().getId()).orElseThrow(() -> new EntityNotFoundException(("Session not found")));
         var user = userRepository.findById(data.user().getId()).orElseThrow(() -> new UserNotFoundExcpetion("User not found"));
-        System.out.println(user.getType());
         var userSession = new UserSession(new DataRegisterUserSession(user, session));
 
         userSession.setSession(session);

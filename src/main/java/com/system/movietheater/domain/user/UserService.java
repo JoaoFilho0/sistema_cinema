@@ -20,6 +20,7 @@ public class UserService {
     private SecurityConfigurations securityConfigurations;
 
     public User register(DataRegisterUser data) {
+        //TODO adicionar verificação de email
         var user = new User(data);
         var password = securityConfigurations.passwordEncoder().encode(user.getPassword());
         user.setPassword(password);
