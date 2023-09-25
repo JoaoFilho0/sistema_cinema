@@ -1,6 +1,7 @@
 package com.system.movietheater.domain.user;
 
 import com.system.movietheater.infra.exception.BadRequestException;
+import com.system.movietheater.infra.exception.EmailAlreadyRegisteredException;
 import com.system.movietheater.infra.exception.UserNotFoundExcpetion;
 import com.system.movietheater.infra.security.SecurityConfigurations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,10 @@ public class UserService {
     private SecurityConfigurations securityConfigurations;
 
     public User register(DataRegisterUser data) {
-        //TODO adicionar verificação de email
+        if (userRepository.findEmail(data.email()) != null) {
+            throw new EmailAlreadyRegisteredException("Email already exists");
+        }
+
         var user = new User(data);
         var password = securityConfigurations.passwordEncoder().encode(user.getPassword());
         user.setPassword(password);

@@ -38,9 +38,8 @@ public class User implements UserDetails {
     @Column(name = "usu_ativo")
     private Boolean active = true;
 
-    @OneToOne
-    @JoinColumn(name = "fk_cinema_id")
-    private MovieTheater movieTheater;
+    @OneToMany(mappedBy = "user")
+    private List<MovieTheater> movieTheater;
 
     @OneToMany
     @JoinTable(

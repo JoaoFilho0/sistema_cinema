@@ -28,7 +28,7 @@ public class Address {
     @Column(name = "end_rua")
     private String street;
 
-    @Column(name = "end_numero")
+    @Column(name = "end_numero", nullable = false)
     private String number;
 
     public Address(DataRegisterAddress data){

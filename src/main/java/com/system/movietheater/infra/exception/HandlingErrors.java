@@ -35,6 +35,21 @@ public class HandlingErrors {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
+    @ExceptionHandler(EmailAlreadyRegisteredException.class)
+    public ResponseEntity<String> handleErrorBadRequest400(EmailAlreadyRegisteredException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
+    @ExceptionHandler(NameMovieTheaterAlreadyRegisteredException.class)
+    public ResponseEntity<String> handleErrorBadRequest400(NameMovieTheaterAlreadyRegisteredException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
+    @ExceptionHandler(AddressMovieTheaterAlreadyExistsException.class)
+    public ResponseEntity<String> handleErrorBadRequest400(AddressMovieTheaterAlreadyExistsException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
     public record DataValidationError(String field, String message){
         public DataValidationError(FieldError error){
             this(error.getField(), error.getDefaultMessage());

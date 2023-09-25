@@ -29,17 +29,30 @@ public class SecurityConfigurations {
                     req.requestMatchers(HttpMethod.POST, "/login").permitAll();
                     req.requestMatchers(HttpMethod.POST, "/usuario").permitAll();
                     req.requestMatchers(HttpMethod.POST, "/cinema").hasRole("USER");
+                    req.requestMatchers(HttpMethod.POST, "/cinema").hasRole("MOVIETHEATER");
+                    req.requestMatchers(HttpMethod.POST, "/cinema/sala").hasRole("MOVIETHEATER");
+                    req.requestMatchers(HttpMethod.POST, "/cinema/horario").hasRole("MOVIETHEATER");
+                    req.requestMatchers(HttpMethod.POST, "/cinema/filme").hasRole("MOVIETHEATER");
+                    req.requestMatchers(HttpMethod.POST, "/cinema/filme").hasRole("ADMIN");
+                    req.requestMatchers(HttpMethod.POST, "/cinema/sessao").hasRole("MOVIETHEATER");
                     req.requestMatchers(HttpMethod.POST, "/cinema").hasRole("ADMIN");
                     req.requestMatchers(HttpMethod.GET, "/cinema").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/cinema/sala/{id}").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/cinema/horario/{id}").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/cinema/filme").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/cinema/sessao").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/usuario").hasRole("ADMIN");
                     req.requestMatchers(HttpMethod.PUT, "/usuario").hasRole("USER");
                     req.requestMatchers(HttpMethod.PUT, "/usuario").hasRole("ADMIN");
-                    req.requestMatchers(HttpMethod.GET, "/usuario").hasRole("ADMIN");
+                    req.requestMatchers(HttpMethod.PUT, "/usuario").hasRole("MOVIETHEATER");
+                    req.requestMatchers(HttpMethod.PUT, "/cinema").hasRole("MOVIETHEATER");
+                    req.requestMatchers(HttpMethod.PUT, "/cinema/horario").hasRole("MOVIETHEATER");
+                    req.requestMatchers(HttpMethod.PUT, "/cinema/filme").hasRole("MOVIETHEATER");
                     req.requestMatchers(HttpMethod.DELETE, "/usuario").hasRole("USER");
                     req.requestMatchers(HttpMethod.DELETE, "/usuario").hasRole("ADMIN");
+                    req.requestMatchers(HttpMethod.DELETE, "/usuario").hasRole("MOVIETHEATER");
+                    req.requestMatchers(HttpMethod.DELETE, "/cinema/horario/{id}").hasRole("MOVIETHEATER");
+                    req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class )

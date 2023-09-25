@@ -1,20 +1,19 @@
 package com.system.movietheater.domain.movietheater;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.system.movietheater.domain.address.Address;
 import com.system.movietheater.domain.horary.Horary;
 import com.system.movietheater.domain.room.Room;
 import com.system.movietheater.domain.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Table(name = "cinema")
 @Entity(name = "Cinema")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -27,6 +26,11 @@ public class    MovieTheater {
 
     @Column(name = "cin_nome")
     private String name;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "fk_usuario_id")
+    private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_endereco_id")
@@ -41,14 +45,6 @@ public class    MovieTheater {
     public MovieTheater(DataRegisterMovieTheater data) {
         this.name = data.name();
         this.address = new Address(data.address());
-    }
-
-    public MovieTheater(User user) {
-        this.id = user.getMovieTheater().getId();
-        this.name = user.getMovieTheater().getName();
-        this.address = user.getMovieTheater().getAddress();
-        this.rooms = user.getMovieTheater().getRooms();
-        this.horaries = user.getMovieTheater().getHoraries();
     }
 
     public MovieTheater(MovieTheater movieTheater) {
