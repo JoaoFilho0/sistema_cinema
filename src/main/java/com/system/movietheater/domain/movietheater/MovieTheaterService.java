@@ -1,5 +1,7 @@
 package com.system.movietheater.domain.movietheater;
 
+import com.system.movietheater.domain.address.Address;
+import com.system.movietheater.domain.address.AddressRepository;
 import com.system.movietheater.domain.user.ProfileUser;
 import com.system.movietheater.domain.user.User;
 import com.system.movietheater.domain.user.UserRepository;
@@ -24,20 +26,18 @@ public class MovieTheaterService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     public MovieTheater register(DataRegisterMovieTheater data) {
-        System.out.println("chegou");
         var user = userRepository.findById(data.user()).orElseThrow(() -> new UserNotFoundExcpetion("User not found"));
 
         if (movieTheaterRepository.findByName(data.name()) != null) {
             throw new NameMovieTheaterAlreadyRegisteredException("Name movie theater already exists");
         }
 
-        var address = movieTheaterRepository.findAddressNumber(data.address().number());
-        if (address != null) {
-            if (Objects.equals(address.getStreet(), data.address().street())) {
-                throw new AddressMovieTheaterAlreadyExistsException("Address movie theater already exists");
-            }
-        }
+        var address = addressRepository.findByNumberAndStreetAndDistrictAndCity(data.address().number(), data.address().street(), data.address().district(), data.address().city());
+        if (address != null) throw new AddressMovieTheaterAlreadyExistsException("Address movie theater already exists");
 
         var movieTheater = new MovieTheater(data);
 

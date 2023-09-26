@@ -1,6 +1,7 @@
 package com.system.movietheater.infra.security;
 
 import com.system.movietheater.domain.user.UserRepository;
+import com.system.movietheater.infra.exception.TokenInvalidOrExpiredException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +28,9 @@ public class SecurityFilter extends OncePerRequestFilter {
         var tokenJWT = recoverToken(request);
 
         if(tokenJWT != null) {
-            var subject = tokenService.getSubject(tokenJWT);
+            String subject = null;
+            subject = tokenService.getSubject(tokenJWT);
+
             var user = userRepository.findByEmail(subject);
 
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());

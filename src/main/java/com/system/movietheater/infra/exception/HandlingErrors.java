@@ -13,6 +13,11 @@ import java.util.List;
 @RestControllerAdvice
 public class HandlingErrors {
 
+    @ExceptionHandler(TokenInvalidOrExpiredException.class)
+    public ResponseEntity<String> handleErrorTokenInvalidOrExpired401(TokenInvalidOrExpiredException exception) {
+        return ResponseEntity.status(HttpStatusCode.valueOf(401)).body(exception.getMessage());
+    }
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handleError404(EntityNotFoundException exception) {
         return ResponseEntity.status(HttpStatusCode.valueOf(404)).body(exception.getMessage());
@@ -36,21 +41,26 @@ public class HandlingErrors {
     }
 
     @ExceptionHandler(EmailAlreadyRegisteredException.class)
-    public ResponseEntity<String> handleErrorBadRequest400(EmailAlreadyRegisteredException exception) {
+    public ResponseEntity<String> handleErrorEmailAlreadyExists400(EmailAlreadyRegisteredException exception) {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
     @ExceptionHandler(NameMovieTheaterAlreadyRegisteredException.class)
-    public ResponseEntity<String> handleErrorBadRequest400(NameMovieTheaterAlreadyRegisteredException exception) {
+    public ResponseEntity<String> handleErrorNameMovieTheaterAlreadyExists400(NameMovieTheaterAlreadyRegisteredException exception) {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
     @ExceptionHandler(AddressMovieTheaterAlreadyExistsException.class)
-    public ResponseEntity<String> handleErrorBadRequest400(AddressMovieTheaterAlreadyExistsException exception) {
+    public ResponseEntity<String> handleErrorAddressMovieTheaterAlreadyExists400(AddressMovieTheaterAlreadyExistsException exception) {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
+    @ExceptionHandler(RoomAlreadyExistsException.class)
+    public ResponseEntity<String> handleErrorRoomAlreadyExists400(RoomAlreadyExistsException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
     public record DataValidationError(String field, String message){
+
         public DataValidationError(FieldError error){
             this(error.getField(), error.getDefaultMessage());
         }

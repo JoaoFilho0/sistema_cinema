@@ -1,6 +1,7 @@
 package com.system.movietheater.domain.room;
 
 import com.system.movietheater.domain.movietheater.MovieTheaterRepository;
+import com.system.movietheater.infra.exception.RoomAlreadyExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class RoomService {
 
     public Room registerRoom(DataRegisterRoom data) {
         var room = new Room(data);
+
+        var roomExistis = roomRepository.findByNumberAndMovieTheater(data.number(),data.movieTheater());
+        if (roomExistis != null) throw new RoomAlreadyExistsException("Room already exists");
 
         roomRepository.save(room);
 
