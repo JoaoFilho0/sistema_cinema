@@ -28,6 +28,16 @@ public class HandlingErrors {
         return ResponseEntity.status(HttpStatusCode.valueOf(404)).body(exception.getMessage());
     }
 
+    @ExceptionHandler(RoomNotFoundException.class)
+    public ResponseEntity<String> handleErrorRoomNotFound404(RoomNotFoundException exception) {
+        return ResponseEntity.status(HttpStatusCode.valueOf(404)).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(MovieNotFoundException.class)
+    public ResponseEntity<String> handleErrorMovieNotFound404(MovieNotFoundException exception) {
+        return ResponseEntity.status(HttpStatusCode.valueOf(404)).body(exception.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<List<DataValidationError>> handleError400(MethodArgumentNotValidException exception) {
         var errors = exception.getFieldErrors();
@@ -59,6 +69,22 @@ public class HandlingErrors {
     public ResponseEntity<String> handleErrorRoomAlreadyExists400(RoomAlreadyExistsException exception) {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
+
+    @ExceptionHandler(HoraryAlreadyExistsException.class)
+    public ResponseEntity<String> handleErrorHoraryAlreadyExists400(HoraryAlreadyExistsException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
+    @ExceptionHandler(SessionHoraryInvalidException.class)
+    public ResponseEntity<String> handleErrorSessionHoraryInvalid400(SessionHoraryInvalidException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
+    @ExceptionHandler(SessionDayInvalidException.class)
+    public ResponseEntity<String> handleErrorSessionDayInvalid400(SessionDayInvalidException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
     public record DataValidationError(String field, String message){
 
         public DataValidationError(FieldError error){

@@ -1,6 +1,7 @@
 package com.system.movietheater.domain.horary;
 
 import com.system.movietheater.domain.movietheater.MovieTheaterRepository;
+import com.system.movietheater.infra.exception.HoraryAlreadyExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class HoraryService {
     private MovieTheaterRepository movieTheaterRepository;
 
     public Horary registerHorary(DataRegisterHorary data) {
+        if (horaryRepository.findMovieTheaterAndDay(data.movieTheater().getId(), data.day()) != null) {
+            throw new HoraryAlreadyExistsException();
+        }
         var horary = new Horary(data);
 
         horaryRepository.save(horary);

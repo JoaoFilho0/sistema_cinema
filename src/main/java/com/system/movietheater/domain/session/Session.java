@@ -5,6 +5,8 @@ import com.system.movietheater.domain.room.Room;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Table(name = "sessao")
 @Entity(name = "Sessao")
 @Getter
@@ -18,6 +20,9 @@ public class Session {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ses_id")
     private Long id;
+
+    @Column(name = "ses_data")
+    private String date;
 
     @Column(name = "ses_horario")
     private String horary;
@@ -37,8 +42,8 @@ public class Session {
     private Room room;
 
     public Session(DataRegisterSession data) {
+        this.date = data.date();
         this.horary = data.horary();
-        this.tickets = data.tickets();
         this.price = data.price();
         this.movie = data.movie();
         this.room = data.room();
@@ -46,6 +51,7 @@ public class Session {
 
     public Session(Session session) {
         this.id = session.getId();
+        this.date = session.getDate();
         this.horary = session.getHorary();
         this.tickets = session.getTickets();
         this.price = session.getPrice();
@@ -55,6 +61,7 @@ public class Session {
 
     public Session(DataListingSession session) {
         this.id = session.id();
+        this.date = session.date();
         this.horary = session.horary();
         this.tickets = session.tickets();
         this.price = session.price();
@@ -63,9 +70,6 @@ public class Session {
     }
 
     public void updateData(DataUpdateSession data) {
-        if (data.tickets() > 0) {
-            this.tickets = data.tickets();
-        }
         if (data.price() != 0) {
             this.price = data.price();
         }
