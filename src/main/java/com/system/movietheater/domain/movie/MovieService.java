@@ -1,5 +1,6 @@
 package com.system.movietheater.domain.movie;
 
+import com.system.movietheater.infra.exception.MovieAlreadyExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,10 @@ public class MovieService {
     private MovieRepository movieRepository;
 
     public Movie registerMovie(DataRegisterMovie data) {
+        if (movieRepository.findByTitleAndDuration(data.title(), data.duration()) != null) {
+            throw new MovieAlreadyExistsException();
+        }
+
         var movie = new Movie(data);
 
         movieRepository.save(movie);

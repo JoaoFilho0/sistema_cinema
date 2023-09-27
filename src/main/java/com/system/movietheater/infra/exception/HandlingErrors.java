@@ -85,6 +85,26 @@ public class HandlingErrors {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
+    @ExceptionHandler(SessionDateInvalidException.class)
+    public ResponseEntity<String> handleErrorSessionDateInvalid400(SessionDateInvalidException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
+    @ExceptionHandler(SessionDurationConflictException.class)
+    public ResponseEntity<String> handleErrorSessionDurationConflict400(SessionDurationConflictException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
+    @ExceptionHandler(SessionDurationInvalidException.class)
+    public ResponseEntity<String> handleErrorSessionDurationConflict400(SessionDurationInvalidException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
+    @ExceptionHandler(MovieAlreadyExistsException.class)
+    public ResponseEntity<String> handleErrorMovieAlreadyExists400(MovieAlreadyExistsException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
     public record DataValidationError(String field, String message){
 
         public DataValidationError(FieldError error){

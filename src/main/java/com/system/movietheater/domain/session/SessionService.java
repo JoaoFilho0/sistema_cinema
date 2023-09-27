@@ -1,6 +1,7 @@
 package com.system.movietheater.domain.session;
 
 import com.system.movietheater.domain.room.RoomRepository;
+import com.system.movietheater.domain.session.validation.ValidationSession;
 import com.system.movietheater.infra.exception.RoomNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,16 @@ public class SessionService {
     @Autowired
     private RoomRepository roomRepository;
 
+    @Autowired
+    private List<ValidationSession> validations;
+
     public Session registerSession(DataRegisterSession data) {
         var room = roomRepository.findById(data.room().getId()).orElseThrow(RoomNotFoundException::new);
 
         var session = new Session(data);
+        session.setRoom(room);
+
+        validations.forEach(v -> v.validate(session));
 
         session.setTickets(room.getSeats());
 
