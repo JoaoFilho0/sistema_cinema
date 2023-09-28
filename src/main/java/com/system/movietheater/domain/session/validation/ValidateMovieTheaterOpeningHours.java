@@ -4,7 +4,7 @@ import com.system.movietheater.domain.horary.Horary;
 import com.system.movietheater.domain.horary.HoraryRepository;
 import com.system.movietheater.domain.session.Session;
 import com.system.movietheater.infra.exception.SessionDayInvalidException;
-import com.system.movietheater.infra.exception.SessionHoraryInvalidException;
+import com.system.movietheater.infra.exception.HoraryInvalidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -54,18 +54,18 @@ public class ValidateMovieTheaterOpeningHours implements ValidationSession{
                 List<Integer> movieTheaterHoraryClosed = Arrays.stream(movieTheaterHorary[1].split(":")).map(Integer::parseInt).toList();
 
                 if(sessionInit.get(0) < movieTheaterHoraryOpen.get(0) || sessionInit.get(0) >= movieTheaterHoraryClosed.get(0)) {
-                    throw new SessionHoraryInvalidException("Outside cinema opening hours");
+                    throw new HoraryInvalidException("Outside cinema opening hours");
                 } else if (Objects.equals(sessionInit.get(0), movieTheaterHoraryOpen.get(0))) {
                     if(sessionInit.get(1) < movieTheaterHoraryOpen.get(1)) {
-                        throw new SessionHoraryInvalidException("Outside cinema opening hours");
+                        throw new HoraryInvalidException("Outside cinema opening hours");
                     }
                 }
 
                 if (sessionEnd.get(0) <= movieTheaterHoraryOpen.get(0) && sessionEnd.get(0) > movieTheaterHoraryClosed.get(0)) {
-                    throw new SessionHoraryInvalidException("Outside cinema opening hours");
+                    throw new HoraryInvalidException("Outside cinema opening hours");
                 } else if (Objects.equals(sessionEnd.get(0), movieTheaterHoraryClosed.get(0))) {
                     if (sessionEnd.get(1) > movieTheaterHoraryClosed.get(1)) {
-                        throw new SessionHoraryInvalidException("Outside cinema opening hours");
+                        throw new HoraryInvalidException("Outside cinema opening hours");
                     }
                 }
                 return;

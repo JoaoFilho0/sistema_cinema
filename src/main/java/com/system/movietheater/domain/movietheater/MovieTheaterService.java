@@ -6,6 +6,7 @@ import com.system.movietheater.domain.user.ProfileUser;
 import com.system.movietheater.domain.user.User;
 import com.system.movietheater.domain.user.UserRepository;
 import com.system.movietheater.infra.exception.AddressMovieTheaterAlreadyExistsException;
+import com.system.movietheater.infra.exception.MovieTheaterNotFoundException;
 import com.system.movietheater.infra.exception.NameMovieTheaterAlreadyRegisteredException;
 import com.system.movietheater.infra.exception.UserNotFoundExcpetion;
 import jakarta.persistence.EntityNotFoundException;
@@ -30,7 +31,7 @@ public class MovieTheaterService {
     private AddressRepository addressRepository;
 
     public MovieTheater register(DataRegisterMovieTheater data) {
-        var user = userRepository.findById(data.user()).orElseThrow(() -> new UserNotFoundExcpetion("User not found"));
+        var user = userRepository.findById(data.user()).orElseThrow(UserNotFoundExcpetion::new);
 
         if (movieTheaterRepository.findByName(data.name()) != null) {
             throw new NameMovieTheaterAlreadyRegisteredException("Name movie theater already exists");
@@ -53,7 +54,7 @@ public class MovieTheaterService {
     }
 
     public URI generateUri(MovieTheater movieTheater, UriComponentsBuilder uriBuilder) {
-        movieTheaterRepository.findById(movieTheater.getId()).orElseThrow(() -> new EntityNotFoundException("Movie theater not found"));
+        movieTheaterRepository.findById(movieTheater.getId()).orElseThrow(MovieTheaterNotFoundException::new);
 
         return uriBuilder.path("cinema/{id}").buildAndExpand(movieTheater.getId()).toUri();
     }
@@ -63,11 +64,11 @@ public class MovieTheaterService {
     }
 
     public MovieTheater selectMovieTheater(Long id) {
-        return movieTheaterRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Movie theater not found"));
+        return movieTheaterRepository.findById(id).orElseThrow(MovieTheaterNotFoundException::new);
     }
 
     public MovieTheater updateMovieTheater(DataUpdateMovieTheater data) {
-        var movieTheater = movieTheaterRepository.findById(data.id()).orElseThrow(() -> new EntityNotFoundException(("Movie theater not found")));
+        var movieTheater = movieTheaterRepository.findById(data.id()).orElseThrow(MovieTheaterNotFoundException::new);
         movieTheater.updateData(data);
 
         return movieTheater;

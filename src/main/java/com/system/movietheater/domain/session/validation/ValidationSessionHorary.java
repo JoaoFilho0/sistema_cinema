@@ -1,7 +1,7 @@
 package com.system.movietheater.domain.session.validation;
 
 import com.system.movietheater.domain.session.Session;
-import com.system.movietheater.infra.exception.SessionHoraryInvalidException;
+import com.system.movietheater.infra.exception.HoraryInvalidException;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -17,13 +17,13 @@ public class ValidationSessionHorary {
             List<Integer> sessionEnd = Arrays.stream(sessionDuration[1].split(":")).map(Integer::parseInt).toList();
 
             if ((sessionInit.get(0) < 0 || sessionInit.get(0) > 23) || (sessionInit.get(1) < 0 || sessionInit.get(1) > 60)) {
-                throw new SessionHoraryInvalidException("Horary is invalid");
+                throw new HoraryInvalidException("Horary is invalid");
             }
             if ((sessionEnd.get(0) < 0 || sessionEnd.get(0) > 23) || (sessionEnd.get(1) < 0 || sessionEnd.get(1) > 60)) {
-                throw new SessionHoraryInvalidException("Horary is invalid");
+                throw new HoraryInvalidException("Horary is invalid");
             }
         } catch (NumberFormatException exception) {
-            throw new SessionHoraryInvalidException("Horary is invalid");
+            throw new HoraryInvalidException("Horary is invalid");
         }
     }
 }

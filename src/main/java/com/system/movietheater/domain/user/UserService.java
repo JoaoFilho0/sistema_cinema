@@ -50,20 +50,20 @@ public class UserService {
     }
 
     public DataDetailingUser selectUser(Long id) {
-        var user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundExcpetion("User not found"));
+        var user = userRepository.findById(id).orElseThrow(UserNotFoundExcpetion::new);
 
         return new DataDetailingUser(user);
     }
 
     public User updateUser(DataUpdateUser data) {
-        var user = userRepository.findById(data.id()).orElseThrow(() -> new UserNotFoundExcpetion("User not found"));
+        var user = userRepository.findById(data.id()).orElseThrow(UserNotFoundExcpetion::new);
         user.updateData(data);
 
         return user;
     }
 
     public User activeAccount(Long id) {
-        var user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundExcpetion("User not found"));
+        var user = userRepository.findById(id).orElseThrow(UserNotFoundExcpetion::new);
 
         if(user.getActive()){
             throw new BadRequestException("User account active");
@@ -75,7 +75,7 @@ public class UserService {
     }
 
     public User disableAccount(Long id) {
-        var user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundExcpetion("User not found"));
+        var user = userRepository.findById(id).orElseThrow(UserNotFoundExcpetion::new);
 
         if(!user.getActive()) {
             throw new BadRequestException("User account disabled");

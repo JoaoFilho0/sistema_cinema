@@ -5,7 +5,6 @@ import com.system.movietheater.domain.movie.MovieRepository;
 import com.system.movietheater.domain.session.Session;
 import com.system.movietheater.infra.exception.MovieNotFoundException;
 import com.system.movietheater.infra.exception.SessionDurationInvalidException;
-import com.system.movietheater.infra.exception.SessionHoraryInvalidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

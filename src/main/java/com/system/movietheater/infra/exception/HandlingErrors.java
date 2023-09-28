@@ -28,6 +28,21 @@ public class HandlingErrors {
         return ResponseEntity.status(HttpStatusCode.valueOf(404)).body(exception.getMessage());
     }
 
+    @ExceptionHandler(MovieTheaterNotFoundException.class)
+    public ResponseEntity<String> handleErrorMovieTheaterNotFound404(MovieTheaterNotFoundException exception) {
+        return ResponseEntity.status(HttpStatusCode.valueOf(404)).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(HoraryNotFoundException.class)
+    public ResponseEntity<String> handleErrorHoraryNotFound404(HoraryNotFoundException exception) {
+        return ResponseEntity.status(HttpStatusCode.valueOf(404)).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(SessionNotFoundException.class)
+    public ResponseEntity<String> handleErrorSessionNotFound404(SessionNotFoundException exception) {
+        return ResponseEntity.status(HttpStatusCode.valueOf(404)).body(exception.getMessage());
+    }
+
     @ExceptionHandler(RoomNotFoundException.class)
     public ResponseEntity<String> handleErrorRoomNotFound404(RoomNotFoundException exception) {
         return ResponseEntity.status(HttpStatusCode.valueOf(404)).body(exception.getMessage());
@@ -75,8 +90,8 @@ public class HandlingErrors {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
-    @ExceptionHandler(SessionHoraryInvalidException.class)
-    public ResponseEntity<String> handleErrorSessionHoraryInvalid400(SessionHoraryInvalidException exception) {
+    @ExceptionHandler(HoraryInvalidException.class)
+    public ResponseEntity<String> handleErrorSessionHoraryInvalid400(HoraryInvalidException exception) {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 

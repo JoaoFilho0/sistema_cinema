@@ -4,6 +4,7 @@ import com.system.movietheater.domain.session.DataUpdateSession;
 import com.system.movietheater.domain.session.SessionRepository;
 import com.system.movietheater.domain.user.User;
 import com.system.movietheater.domain.user.UserRepository;
+import com.system.movietheater.infra.exception.SessionNotFoundException;
 import com.system.movietheater.infra.exception.UserNotFoundExcpetion;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,8 @@ public class UserSessionService {
     private UserRepository userRepository;
 
     public UserSession registerUserSession(DataRegisterUserSession data) {
-        var session = sessionRepository.findById(data.session().getId()).orElseThrow(() -> new EntityNotFoundException(("Session not found")));
-        var user = userRepository.findById(data.user().getId()).orElseThrow(() -> new UserNotFoundExcpetion("User not found"));
+        var session = sessionRepository.findById(data.session().getId()).orElseThrow(SessionNotFoundException::new);
+        var user = userRepository.findById(data.user().getId()).orElseThrow(UserNotFoundExcpetion::new);
         var userSession = new UserSession(new DataRegisterUserSession(user, session));
 
         userSession.setSession(session);
@@ -34,7 +35,7 @@ public class UserSessionService {
         userSessionRepository.save(userSession);
 
         session.setTickets(session.getTickets() - 1);
-        session.updateData(new DataUpdateSession(session.getId(), session.getTickets(), session.getPrice()));
+        session.updateData(new DataUpdateSession(session.getId(), session.getPrice()));
 
         return userSession;
     }
@@ -44,6 +45,6 @@ public class UserSessionService {
     }
 
     public User listingUserSessionPerUser(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundExcpetion("User not found"));
+        return userRepository.findById(id).orElseThrow(UserNotFoundExcpetion::new);
     }
 }
