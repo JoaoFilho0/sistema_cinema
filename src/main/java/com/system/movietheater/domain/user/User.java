@@ -77,12 +77,8 @@ public class User implements UserDetails {
         }
     }
 
-    public void disableAccount() {
-        this.active = false;
-    }
-
-    public void activeAccount() {
-        this.active = true;
+    public void statusAccount(Boolean status) {
+        this.active = !status;
     }
 
     @Override

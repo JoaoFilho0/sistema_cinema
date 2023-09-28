@@ -2,6 +2,7 @@ package com.system.movietheater.domain.room;
 
 import com.system.movietheater.domain.movietheater.MovieTheaterRepository;
 import com.system.movietheater.infra.exception.RoomAlreadyExistsException;
+import com.system.movietheater.infra.exception.RoomNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,5 +46,11 @@ public class RoomService {
         room.updateData(data);
 
         return room;
+    }
+
+    public void deleteRoom(Long id) {
+        var room = roomRepository.findById(id).orElseThrow(RoomNotFoundException::new);
+
+        roomRepository.delete(room);
     }
 }

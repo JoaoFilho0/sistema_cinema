@@ -66,10 +66,10 @@ public class UserService {
         var user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundExcpetion("User not found"));
 
         if(user.getActive()){
-            throw new BadRequestException("User account actived");
+            throw new BadRequestException("User account active");
         }
 
-        user.activeAccount();
+        user.statusAccount(false);
 
         return user;
     }
@@ -81,7 +81,7 @@ public class UserService {
             throw new BadRequestException("User account disabled");
         }
 
-        user.disableAccount();
+        user.statusAccount(true);
 
         return user;
     }

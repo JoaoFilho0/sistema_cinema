@@ -4,6 +4,7 @@ import com.system.movietheater.domain.horary.DataRegisterHorary;
 import com.system.movietheater.domain.horary.DataUpdateHorary;
 import com.system.movietheater.domain.horary.Horary;
 import com.system.movietheater.domain.horary.HoraryService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ public class HoraryController {
 
     @PostMapping
     @Transactional
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<Horary> register(@RequestBody @Valid DataRegisterHorary data) {
         return ResponseEntity.ok(horaryService.registerHorary(data));
     }
@@ -32,12 +34,14 @@ public class HoraryController {
 
     @PutMapping
     @Transactional
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<Horary> update(@RequestBody @Valid DataUpdateHorary data) {
         return ResponseEntity.ok(horaryService.updateHorary(data));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
+    @SecurityRequirement(name = "bearer-key")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         horaryService.deleteHorary(id);
 
         return ResponseEntity.noContent().build();

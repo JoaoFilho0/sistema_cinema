@@ -58,8 +58,8 @@ public class MovieTheaterService {
         return uriBuilder.path("cinema/{id}").buildAndExpand(movieTheater.getId()).toUri();
     }
 
-    public List<MovieTheater> listMovieTheaters() {
-        return movieTheaterRepository.findAllMovieTheaterActive();
+    public List<DataListingMovieTheater> listMovieTheaters() {
+        return movieTheaterRepository.findAllMovieTheaterActive().stream().map(DataListingMovieTheater::new).toList();
     }
 
     public MovieTheater selectMovieTheater(Long id) {

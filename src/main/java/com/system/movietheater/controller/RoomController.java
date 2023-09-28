@@ -38,4 +38,10 @@ public class RoomController {
         return ResponseEntity.ok(roomService.updateRoom(data));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        roomService.deleteRoom(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }

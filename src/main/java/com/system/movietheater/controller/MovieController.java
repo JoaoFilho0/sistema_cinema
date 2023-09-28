@@ -1,6 +1,7 @@
 package com.system.movietheater.controller;
 
 import com.system.movietheater.domain.movie.*;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,7 @@ public class MovieController {
 
     @PostMapping
     @Transactional
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<DataListingMovie> register(@RequestBody @Valid DataRegisterMovie data, UriComponentsBuilder uriBuilder) {
         var movie = new Movie(movieService.registerMovie(data));
 
@@ -37,6 +39,7 @@ public class MovieController {
 
     @PutMapping
     @Transactional
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<DataListingMovie> update(@RequestBody @Valid DataUpdateMovie data) {
         return ResponseEntity.ok(new DataListingMovie(movieService.updateMovie(data)));
     }

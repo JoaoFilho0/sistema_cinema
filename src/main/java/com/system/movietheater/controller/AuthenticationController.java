@@ -4,6 +4,10 @@ import com.system.movietheater.domain.user.DataAuthentication;
 import com.system.movietheater.domain.user.User;
 import com.system.movietheater.infra.security.DataTokenJWT;
 import com.system.movietheater.infra.security.TokenService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +29,12 @@ public class AuthenticationController {
     private TokenService tokenService;
 
     @PostMapping
+    @Operation(summary = "User login")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful request: User logged.", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Email or password is blank.", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content),
+    })
     public ResponseEntity<DataTokenJWT> login(@RequestBody @Valid DataAuthentication data) {
         var authenticationToken = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var authentication = authenticationManager.authenticate(authenticationToken);
@@ -33,5 +43,4 @@ public class AuthenticationController {
 
         return ResponseEntity.ok(new DataTokenJWT(tokenJWT));
     }
-
 }

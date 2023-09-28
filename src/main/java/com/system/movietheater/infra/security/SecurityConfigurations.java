@@ -47,6 +47,7 @@ public class SecurityConfigurations {
                     req.requestMatchers(HttpMethod.POST, "/cinema/filme").hasAnyRole("MOVIETHEATER", "ADMIN");
                     req.requestMatchers(HttpMethod.POST, "/cinema/sessao").hasRole("MOVIETHEATER");
                     req.requestMatchers(HttpMethod.GET, "/cinema").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/cinema/{id}").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/cinema/sala/{id}").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/cinema/horario/{id}").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/cinema/filme").permitAll();
