@@ -1,7 +1,6 @@
 package com.system.movietheater.infra.security;
 
 import com.system.movietheater.domain.user.UserRepository;
-import com.system.movietheater.infra.exception.TokenInvalidOrExpiredException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

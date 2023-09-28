@@ -2,15 +2,12 @@ package com.system.movietheater.domain.movie;
 
 import com.system.movietheater.infra.exception.MovieAlreadyExistsException;
 import com.system.movietheater.infra.exception.MovieNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service

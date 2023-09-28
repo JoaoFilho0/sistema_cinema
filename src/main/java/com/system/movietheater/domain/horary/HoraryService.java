@@ -5,7 +5,6 @@ import com.system.movietheater.domain.movietheater.MovieTheaterRepository;
 import com.system.movietheater.infra.exception.HoraryAlreadyExistsException;
 import com.system.movietheater.infra.exception.HoraryNotFoundException;
 import com.system.movietheater.infra.exception.MovieTheaterNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

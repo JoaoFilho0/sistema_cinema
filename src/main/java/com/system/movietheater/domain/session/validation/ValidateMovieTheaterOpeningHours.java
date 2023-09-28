@@ -3,8 +3,8 @@ package com.system.movietheater.domain.session.validation;
 import com.system.movietheater.domain.horary.Horary;
 import com.system.movietheater.domain.horary.HoraryRepository;
 import com.system.movietheater.domain.session.Session;
-import com.system.movietheater.infra.exception.SessionDayInvalidException;
 import com.system.movietheater.infra.exception.HoraryInvalidException;
+import com.system.movietheater.infra.exception.SessionDayInvalidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

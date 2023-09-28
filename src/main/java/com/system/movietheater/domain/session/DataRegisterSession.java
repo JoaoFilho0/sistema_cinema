@@ -3,12 +3,9 @@ package com.system.movietheater.domain.session;
 import com.system.movietheater.domain.movie.Movie;
 import com.system.movietheater.domain.room.Room;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-
-import java.time.LocalDateTime;
 
 public record DataRegisterSession(
     @Schema(name = "date", description = "session date", example = "2023-10-26")

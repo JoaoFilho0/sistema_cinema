@@ -1,6 +1,5 @@
 package com.system.movietheater.domain.user;
 
-import com.system.movietheater.domain.movietheater.MovieTheater;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 

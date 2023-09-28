@@ -1,22 +1,18 @@
 package com.system.movietheater.domain.movietheater;
 
-import com.system.movietheater.domain.address.Address;
 import com.system.movietheater.domain.address.AddressRepository;
 import com.system.movietheater.domain.user.ProfileUser;
-import com.system.movietheater.domain.user.User;
 import com.system.movietheater.domain.user.UserRepository;
 import com.system.movietheater.infra.exception.AddressMovieTheaterAlreadyExistsException;
 import com.system.movietheater.infra.exception.MovieTheaterNotFoundException;
 import com.system.movietheater.infra.exception.NameMovieTheaterAlreadyRegisteredException;
 import com.system.movietheater.infra.exception.UserNotFoundExcpetion;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class MovieTheaterService {

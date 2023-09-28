@@ -5,8 +5,6 @@ import com.system.movietheater.domain.room.Room;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Table(name = "sessao")
 @Entity(name = "Sessao")
 @Getter
