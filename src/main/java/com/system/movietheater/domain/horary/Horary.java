@@ -33,7 +33,7 @@ public class Horary {
     public Horary(DataRegisterHorary data) {
         this.day = data.day();
         this.horary = data.horary();
-        this.movieTheater = data.movieTheater();
+        this.movieTheater = new MovieTheater(data.movieTheater());
     }
 
     public void updateData(DataUpdateHorary data) {

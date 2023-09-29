@@ -15,7 +15,7 @@ public record DataRegisterMovieTheater(
         @NotNull
         DataRegisterAddress address,
         @Schema(name = "user", description = "user id", example = "1")
-        @NotEmpty
+        @NotNull
         Long user
 ) {
 }

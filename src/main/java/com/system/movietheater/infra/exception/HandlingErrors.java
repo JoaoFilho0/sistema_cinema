@@ -120,6 +120,16 @@ public class HandlingErrors {
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
+    @ExceptionHandler(EmptyFieldException.class)
+    public ResponseEntity<String> handleErrorEmptyField400(EmptyFieldException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
+    @ExceptionHandler(AddressNotFoundException.class)
+    public ResponseEntity<String> handleErrorAddressNotFound400(AddressNotFoundException exception) {
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
+
     public record DataValidationError(String field, String message){
 
         public DataValidationError(FieldError error){

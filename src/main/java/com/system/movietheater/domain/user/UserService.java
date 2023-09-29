@@ -5,6 +5,7 @@ import com.system.movietheater.infra.exception.EmailAlreadyRegisteredException;
 import com.system.movietheater.infra.exception.UserNotFoundExcpetion;
 import com.system.movietheater.infra.security.SecurityConfigurations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -43,6 +44,10 @@ public class UserService {
 
     public URI generateUri(User user, UriComponentsBuilder uriBuilder) {
         return uriBuilder.path("usuario/{id}").buildAndExpand(user.getId()).toUri();
+    }
+
+    public List<DataListingUser> listUsers(Pageable pagination) {
+        return userRepository.findAll(pagination).stream().map(DataListingUser::new).toList();
     }
 
     public List<DataListingUser> listUsers() {

@@ -55,6 +55,10 @@ public class    MovieTheater {
         this.horaries = movieTheater.getHoraries();
     }
 
+    public MovieTheater(DataListingMovieTheater dataListingMovieTheater) {
+        this.id = dataListingMovieTheater.id();
+    }
+
     public void updateData(DataUpdateMovieTheater data) {
         if (this.name != null) {
             this.name = data.name();

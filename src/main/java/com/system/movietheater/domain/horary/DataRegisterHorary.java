@@ -1,5 +1,6 @@
 package com.system.movietheater.domain.horary;
 
+import com.system.movietheater.domain.movietheater.DataListingMovieTheater;
 import com.system.movietheater.domain.movietheater.MovieTheater;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -15,7 +16,7 @@ public record DataRegisterHorary(
         @NotEmpty
         @NotBlank
         String horary,
-        @Schema(name = "movie theater", description = "movie theater")
+        @Schema(name = "movieTheater", description = "movie theater")
         @NotNull
-        MovieTheater movieTheater) {
+        DataListingMovieTheater movieTheater) {
 }

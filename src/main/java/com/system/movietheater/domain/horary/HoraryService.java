@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class HoraryService {
@@ -23,14 +24,16 @@ public class HoraryService {
     private List<ValidationHorary> validations;
 
     public Horary registerHorary(DataRegisterHorary data) {
-        if (horaryRepository.findMovieTheaterAndDay(data.movieTheater().getId(), data.day()) != null) {
+        if (horaryRepository.findMovieTheaterAndDay(data.movieTheater().id(), data.day()) != null) {
             throw new HoraryAlreadyExistsException();
         }
 
-        movieTheaterRepository.findById(data.movieTheater().getId()).orElseThrow(MovieTheaterNotFoundException::new);
+        movieTheaterRepository.findById(data.movieTheater().id()).orElseThrow(MovieTheaterNotFoundException::new);
         var horary = new Horary(data);
 
         validations.forEach(validation -> validation.validate(horary));
+
+        horary.setDay(horary.getDay().toLowerCase(Locale.ROOT));
 
         horaryRepository.save(horary);
 
@@ -38,7 +41,13 @@ public class HoraryService {
     }
 
     public Horary updateHorary(DataUpdateHorary data) {
+        if (horaryRepository.findMovieTheaterAndDay(data.movieTheater().id(), data.day()) != null) {
+            throw new HoraryAlreadyExistsException();
+        }
+
         var horary = horaryRepository.findById(data.id()).orElseThrow(HoraryNotFoundException::new);
+
+        movieTheaterRepository.findById(data.movieTheater().id()).orElseThrow(MovieTheaterNotFoundException::new);
 
         horary.updateData(data);
 

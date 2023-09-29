@@ -32,7 +32,7 @@ public class UserSession {
 
     public UserSession(DataRegisterUserSession data) {
         this.check = 1;
-        this.user = data.user();
+        this.user = new User(data.user());
         this.session = data.session();
     }
 

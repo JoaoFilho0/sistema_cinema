@@ -11,7 +11,6 @@ public record DataRegisterMovie(
         @NotBlank
         String title,
         @Schema(name = "duration", description = "movie duration", example = "100")
-        @NotEmpty
         @NotNull
         int duration
 ) {

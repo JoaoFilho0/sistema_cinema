@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
     Room findByNumberAndMovieTheater(int number, MovieTheater movieTheater);
+
+    Room findByNumberAndSeatsAndMovieTheater(int number, int seats, MovieTheater movieTheater);
 }

@@ -1,6 +1,8 @@
 package com.system.movietheater.domain.room;
 
+import com.system.movietheater.domain.movietheater.MovieTheater;
 import com.system.movietheater.domain.movietheater.MovieTheaterRepository;
+import com.system.movietheater.infra.exception.EmptyFieldException;
 import com.system.movietheater.infra.exception.MovieTheaterNotFoundException;
 import com.system.movietheater.infra.exception.RoomAlreadyExistsException;
 import com.system.movietheater.infra.exception.RoomNotFoundException;
@@ -23,9 +25,9 @@ public class RoomService {
     public Room registerRoom(DataRegisterRoom data) {
         var room = new Room(data);
 
-        movieTheaterRepository.findById(data.movieTheater().getId()).orElseThrow(MovieTheaterNotFoundException::new);
+        movieTheaterRepository.findById(data.movieTheater().id()).orElseThrow(MovieTheaterNotFoundException::new);
 
-        var roomExistis = roomRepository.findByNumberAndMovieTheater(data.number(),data.movieTheater());
+        var roomExistis = roomRepository.findByNumberAndMovieTheater(data.number(), new MovieTheater(data.movieTheater()));
         if (roomExistis != null) throw new RoomAlreadyExistsException("Room already exists");
 
         roomRepository.save(room);
@@ -44,7 +46,15 @@ public class RoomService {
     }
 
     public Room updateRoom(DataUpdateRoom data) {
+        System.out.println(data.toString());
+
         var room = roomRepository.findById(data.id()).orElseThrow(RoomNotFoundException::new);
+
+        movieTheaterRepository.findById(data.movieTheater().id()).orElseThrow(MovieTheaterNotFoundException::new);
+
+        var roomExistis = roomRepository.findByNumberAndSeatsAndMovieTheater(data.number(), data.seats(), new MovieTheater(data.movieTheater()));
+        if (roomExistis != null) throw new RoomAlreadyExistsException("Room already exists");
+
         room.updateData(data);
 
         return room;

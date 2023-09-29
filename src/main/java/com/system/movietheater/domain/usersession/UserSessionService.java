@@ -2,6 +2,7 @@ package com.system.movietheater.domain.usersession;
 
 import com.system.movietheater.domain.session.DataUpdateSession;
 import com.system.movietheater.domain.session.SessionRepository;
+import com.system.movietheater.domain.user.DataListingUser;
 import com.system.movietheater.domain.user.User;
 import com.system.movietheater.domain.user.UserRepository;
 import com.system.movietheater.infra.exception.SessionNotFoundException;
@@ -26,8 +27,8 @@ public class UserSessionService {
 
     public UserSession registerUserSession(DataRegisterUserSession data) {
         var session = sessionRepository.findById(data.session().getId()).orElseThrow(SessionNotFoundException::new);
-        var user = userRepository.findById(data.user().getId()).orElseThrow(UserNotFoundExcpetion::new);
-        var userSession = new UserSession(new DataRegisterUserSession(user, session));
+        var user = userRepository.findById(data.user().id()).orElseThrow(UserNotFoundExcpetion::new);
+        var userSession = new UserSession(new DataRegisterUserSession(new DataListingUser(user), session));
 
         userSession.setSession(session);
 

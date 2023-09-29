@@ -53,8 +53,9 @@ public class HoraryController {
     @Operation(summary = "Update horary")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful request: Horary updated.", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Horary id is null.", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Horary not found.", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Horary id or/and movie theater is null.", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Horary not found." +
+                    "<br>Movie theater not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<Horary> update(@RequestBody @Valid DataUpdateHorary data) {

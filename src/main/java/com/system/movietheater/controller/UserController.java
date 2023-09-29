@@ -44,8 +44,9 @@ public class UserController {
     @Transactional
     @Operation(summary = "Save user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Successful request: User saved."),
-            @ApiResponse(responseCode = "400", description = "Name, email or password is blank."),
+            @ApiResponse(responseCode = "201", description = "Successful request: User saved.", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Name, email or/and password is blank." +
+                    "<br>Email already exists in database.", content = @Content),
     })
     public ResponseEntity<DataDetailingUser> register(@RequestBody @Valid DataRegisterUser data, UriComponentsBuilder uriBuilder) {
         var user = new User(userService.register(data));
@@ -58,8 +59,8 @@ public class UserController {
     @Operation(summary = "Save user session")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Successful request: User session saved.", content = @Content),
-            @ApiResponse(responseCode = "400", description = "User or session is null.", content = @Content),
-            @ApiResponse(responseCode = "404", description = "User or session not found.", content = @Content),
+            @ApiResponse(responseCode = "400", description = "User or/and session is null.", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User or/and session not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<DataReturnUserSession> registerUserSession(@RequestBody @Valid DataRegisterUserSession data, UriComponentsBuilder uriBuilder) {
@@ -71,7 +72,7 @@ public class UserController {
     @GetMapping("{id}/sessao")
     @Operation(summary = "List sessions by user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful request: User session list.", content = @Content),
+            @ApiResponse(responseCode = "200", description = "Successful request: User session listed.", content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
@@ -82,17 +83,17 @@ public class UserController {
     @GetMapping
     @Operation(summary = "List users")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful request: User list.", content = @Content),
+            @ApiResponse(responseCode = "200", description = "Successful request: User listed.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<List<DataListingUser>> list(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
-         return ResponseEntity.ok(userService.listUsers());
+    public ResponseEntity<List<DataListingUser>> list(@PageableDefault(size = 10, sort = "name") Pageable pageable) {
+         return ResponseEntity.ok(userService.listUsers(pageable));
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Select user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful request: User select.", content = @Content),
+            @ApiResponse(responseCode = "200", description = "Successful request: User selected.", content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")

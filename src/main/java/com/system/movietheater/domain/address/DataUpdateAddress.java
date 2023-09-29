@@ -2,9 +2,11 @@ package com.system.movietheater.domain.address;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record DataUpdateAddress(
-        @NotBlank
+        @Schema(name = "id", description = "address id", example = "1")
+        @NotNull
         Long id,
         @Schema(name = "city", description = "city related to cinema", example = "cidade")
         String city,

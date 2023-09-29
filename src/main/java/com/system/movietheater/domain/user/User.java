@@ -68,6 +68,12 @@ public class User implements UserDetails {
         this.movieTheater = user.getMovieTheater();
     }
 
+    public User(DataListingUser user) {
+        this.id = user.id();
+        this.name = user.name();
+        this.email = user.email();
+    }
+
     public void updateData(DataUpdateUser data) {
         if (data.name() != null) {
             this.name = data.name();

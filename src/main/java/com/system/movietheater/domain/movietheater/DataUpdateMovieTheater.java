@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record DataUpdateMovieTheater(
         @Schema(name = "id", description = "movie theater id", example = "1")
-        @NotEmpty
         @NotNull
         Long id,
         @Schema(name = "name", description = "movie theater name", example = "Cinema")

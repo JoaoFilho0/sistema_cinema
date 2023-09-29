@@ -33,7 +33,7 @@ public class Room {
     public Room(DataRegisterRoom data) {
         this.number = data.number();
         this.seats = data.seats();
-        this.movieTheater = data.movieTheater();
+        this.movieTheater = new MovieTheater(data.movieTheater());
     }
 
     public Room(Room room) {

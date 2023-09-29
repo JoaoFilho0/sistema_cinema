@@ -17,15 +17,12 @@ public record DataRegisterSession(
     @NotBlank
     String horary,
     @Schema(name = "price", description = "session price", example = "20.10")
-    @NotEmpty
-    @NotBlank
+    @NotNull
     float price,
     @Schema(name = "room", description = "session room")
-    @NotEmpty
     @NotNull
     Room room,
     @Schema(name = "movie", description = "session movie")
-    @NotEmpty
     @NotNull
     Movie movie
 

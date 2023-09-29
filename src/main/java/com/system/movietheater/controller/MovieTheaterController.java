@@ -70,4 +70,18 @@ public class MovieTheaterController {
     public ResponseEntity<DataDetalingMovieTheater> update(@RequestBody @Valid DataUpdateMovieTheater data) {
         return ResponseEntity.ok(new DataDetalingMovieTheater(movieTheaterService.updateMovieTheater(data)));
     }
+
+    @DeleteMapping
+    @Operation(summary = "Delete movie theater")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Successful request: Movie theater deleted.", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Movie theater not found." +
+                    "<br>Address not found.", content = @Content),
+    })
+    @SecurityRequirement(name = "bearer-key")
+    public ResponseEntity<String> delete(@RequestBody Long id) {
+        movieTheaterService.deleteMovieTheater(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }

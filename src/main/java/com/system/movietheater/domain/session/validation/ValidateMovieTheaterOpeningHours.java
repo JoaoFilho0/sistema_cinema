@@ -80,31 +80,31 @@ public class ValidateMovieTheaterOpeningHours implements ValidationSession{
     private String findDayWeek(DayOfWeek date) {
         switch (date) {
             case MONDAY -> {
-                return "Segunda-feira";
+                return "segunda-feira";
             }
 
             case TUESDAY -> {
-                return "Terça-feira";
+                return "terça-feira";
             }
 
             case WEDNESDAY -> {
-                return "Quarta-feira";
+                return "quarta-feira";
             }
 
             case THURSDAY -> {
-                return "Quinta-feira";
+                return "quinta-feira";
             }
 
             case FRIDAY -> {
-                return "Sexta-feira";
+                return "sexta-feira";
             }
 
             case SATURDAY -> {
-                return "Sábado-feira";
+                return "sábado";
             }
 
             case SUNDAY -> {
-                return "Domingo-feira";
+                return "domingo";
             }
 
             default -> {
