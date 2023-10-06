@@ -2,7 +2,6 @@ package com.system.movietheater.domain.room;
 
 import com.system.movietheater.domain.movietheater.MovieTheater;
 import com.system.movietheater.domain.movietheater.MovieTheaterRepository;
-import com.system.movietheater.infra.exception.EmptyFieldException;
 import com.system.movietheater.infra.exception.MovieTheaterNotFoundException;
 import com.system.movietheater.infra.exception.RoomAlreadyExistsException;
 import com.system.movietheater.infra.exception.RoomNotFoundException;

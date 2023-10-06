@@ -2,7 +2,6 @@ package com.system.movietheater.domain.movietheater;
 
 import com.system.movietheater.domain.address.DataUpdateAddress;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public record DataUpdateMovieTheater(
