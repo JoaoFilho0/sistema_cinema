@@ -1,8 +1,8 @@
 package com.system.movietheater;
 
-import com.system.movietheater.domain.user.ProfileUser;
-import com.system.movietheater.domain.user.User;
-import com.system.movietheater.domain.user.UserService;
+import com.system.movietheater.domain.Enum.TypeUserEnum;
+import com.system.movietheater.domain.model.User;
+import com.system.movietheater.usercase.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -29,7 +29,7 @@ public class MovieTheaterApplication implements CommandLineRunner {
 			user.setName("ADM");
 			user.setEmail("adm@adm.com");
 			user.setPassword("123456");
-			user.setType(List.of(ProfileUser.ROLE_ADMIN));
+			user.setType(List.of(TypeUserEnum.ROLE_ADMIN));
 
 			userService.registerAdm(user);
 		}
