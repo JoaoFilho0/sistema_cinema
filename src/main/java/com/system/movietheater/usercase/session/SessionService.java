@@ -1,7 +1,7 @@
 package com.system.movietheater.usercase.session;
 
-import com.system.movietheater.application.dto.session.DataListingSession;
-import com.system.movietheater.application.dto.session.DataRegisterSession;
+import com.system.movietheater.application.dto.session.ListingSessionDto;
+import com.system.movietheater.application.dto.session.RegisterSessionDto;
 import com.system.movietheater.domain.model.Session;
 import com.system.movietheater.infrastructure.persistence.repository.MovieRepository;
 import com.system.movietheater.infrastructure.persistence.repository.RoomRepository;
@@ -31,7 +31,7 @@ public class SessionService {
     @Autowired
     private List<ValidationSession> validations;
 
-    public Session registerSession(DataRegisterSession data) {
+    public Session registerSession(RegisterSessionDto data) {
         var room = roomRepository.findById(data.room().getId()).orElseThrow(RoomNotFoundException::new);
 
         movieRepository.findById(data.movie().getId()).orElseThrow(MovieNotFoundException::new);
@@ -52,7 +52,7 @@ public class SessionService {
         return uriBuilder.path("cinema/sessao/{id}").buildAndExpand(session.getId()).toUri();
     }
 
-    public List<DataListingSession> list() {
-        return sessionRepository.findAll().stream().map(DataListingSession::new).toList();
+    public List<ListingSessionDto> list() {
+        return sessionRepository.findAll().stream().map(ListingSessionDto::new).toList();
     }
 }

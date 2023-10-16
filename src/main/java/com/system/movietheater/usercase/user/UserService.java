@@ -1,9 +1,9 @@
 package com.system.movietheater.usercase.user;
 
-import com.system.movietheater.application.dto.user.DataDetailingUser;
-import com.system.movietheater.application.dto.user.DataListingUser;
-import com.system.movietheater.application.dto.user.DataRegisterUser;
-import com.system.movietheater.application.dto.user.DataUpdateUser;
+import com.system.movietheater.application.dto.user.DetailingUserDto;
+import com.system.movietheater.application.dto.user.ListingUserDto;
+import com.system.movietheater.application.dto.user.RegisterUserDto;
+import com.system.movietheater.application.dto.user.UpdateUserDto;
 import com.system.movietheater.domain.model.User;
 import com.system.movietheater.infrastructure.exceptions.BadRequestException;
 import com.system.movietheater.infrastructure.exceptions.EmailAlreadyRegisteredException;
@@ -27,7 +27,7 @@ public class UserService {
     @Autowired
     private SecurityConfigurations securityConfigurations;
 
-    public User register(DataRegisterUser data) {
+    public User register(RegisterUserDto data) {
         if (userRepository.findEmail(data.email()) != null) {
             throw new EmailAlreadyRegisteredException("Email already exists");
         }
@@ -52,21 +52,21 @@ public class UserService {
         return uriBuilder.path("usuario/{id}").buildAndExpand(user.getId()).toUri();
     }
 
-    public List<DataListingUser> listUsers(Pageable pagination) {
-        return userRepository.findAll(pagination).stream().map(DataListingUser::new).toList();
+    public List<ListingUserDto> listUsers(Pageable pagination) {
+        return userRepository.findAll(pagination).stream().map(ListingUserDto::new).toList();
     }
 
-    public List<DataListingUser> listUsers() {
+    public List<ListingUserDto> listUsers() {
         return userRepository.findByActiveTrue();
     }
 
-    public DataDetailingUser selectUser(Long id) {
+    public DetailingUserDto selectUser(Long id) {
         var user = userRepository.findById(id).orElseThrow(UserNotFoundExcpetion::new);
 
-        return new DataDetailingUser(user);
+        return new DetailingUserDto(user);
     }
 
-    public User updateUser(DataUpdateUser data) {
+    public User updateUser(UpdateUserDto data) {
         var user = userRepository.findById(data.id()).orElseThrow(UserNotFoundExcpetion::new);
         user.updateData(data);
 

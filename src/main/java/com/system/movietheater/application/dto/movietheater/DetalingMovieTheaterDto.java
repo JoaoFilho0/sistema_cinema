@@ -7,7 +7,7 @@ import com.system.movietheater.domain.model.Room;
 
 import java.util.List;
 
-public record DataDetalingMovieTheater(
+public record DetalingMovieTheaterDto(
         Long id,
         String name,
         Address address,
@@ -15,7 +15,7 @@ public record DataDetalingMovieTheater(
         List<Horary> horaries
 ) {
 
-    public DataDetalingMovieTheater(MovieTheater movieTheater) {
+    public DetalingMovieTheaterDto(MovieTheater movieTheater) {
         this(movieTheater.getId(), movieTheater.getName(), movieTheater.getAddress(), movieTheater.getRooms(), movieTheater.getHoraries());
     }
 

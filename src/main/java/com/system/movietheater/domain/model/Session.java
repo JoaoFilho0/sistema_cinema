@@ -1,8 +1,8 @@
 package com.system.movietheater.domain.model;
 
-import com.system.movietheater.application.dto.session.DataListingSession;
-import com.system.movietheater.application.dto.session.DataRegisterSession;
-import com.system.movietheater.application.dto.session.DataUpdateSession;
+import com.system.movietheater.application.dto.session.ListingSessionDto;
+import com.system.movietheater.application.dto.session.RegisterSessionDto;
+import com.system.movietheater.application.dto.session.UpdateSessionDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -40,7 +40,7 @@ public class Session {
     @JoinColumn(name = "fk_sala_id")
     private Room room;
 
-    public Session(DataRegisterSession data) {
+    public Session(RegisterSessionDto data) {
         this.date = data.date();
         this.horary = data.horary();
         this.price = data.price();
@@ -58,7 +58,7 @@ public class Session {
         this.room = session.getRoom();
     }
 
-    public Session(DataListingSession session) {
+    public Session(ListingSessionDto session) {
         this.id = session.id();
         this.date = session.date();
         this.horary = session.horary();
@@ -68,7 +68,7 @@ public class Session {
         this.room = session.room();
     }
 
-    public void updateData(DataUpdateSession data) {
+    public void updateData(UpdateSessionDto data) {
         if (data.price() != 0) {
             this.price = data.price();
         }

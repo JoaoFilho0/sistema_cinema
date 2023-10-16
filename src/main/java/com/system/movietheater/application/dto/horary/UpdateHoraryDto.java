@@ -1,10 +1,10 @@
 package com.system.movietheater.application.dto.horary;
 
-import com.system.movietheater.application.dto.movietheater.DataListingMovieTheater;
+import com.system.movietheater.application.dto.movietheater.ListingMovieTheaterDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
-public record DataUpdateHorary(
+public record UpdateHoraryDto(
         @Schema(name = "id", description = "horary id", example = "1")
         @NotNull
         Long id,
@@ -14,6 +14,6 @@ public record DataUpdateHorary(
         String horary,
         @Schema(name = "movieTheater", description = "movie theater")
         @NotNull
-        DataListingMovieTheater movieTheater
+        ListingMovieTheaterDto movieTheater
 ) {
 }

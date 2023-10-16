@@ -1,8 +1,8 @@
 package com.system.movietheater.application.controller;
 
-import com.system.movietheater.application.dto.room.DataListingRoom;
-import com.system.movietheater.application.dto.room.DataRegisterRoom;
-import com.system.movietheater.application.dto.room.DataUpdateRoom;
+import com.system.movietheater.application.dto.room.ListingRoomDto;
+import com.system.movietheater.application.dto.room.RegisterRoomDto;
+import com.system.movietheater.application.dto.room.UpdateRoomDto;
 import com.system.movietheater.domain.model.Room;
 import com.system.movietheater.usercase.room.RoomService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,10 +38,10 @@ public class RoomController {
             @ApiResponse(responseCode = "404", description = "Movie theater not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<DataListingRoom> register(@RequestBody @Valid DataRegisterRoom data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<ListingRoomDto> register(@RequestBody @Valid RegisterRoomDto data, UriComponentsBuilder uriBuilder) {
         var room = new Room(roomService.registerRoom(data));
 
-        return ResponseEntity.created(roomService.generateUri(room, uriBuilder)).body(new DataListingRoom(room));
+        return ResponseEntity.created(roomService.generateUri(room, uriBuilder)).body(new ListingRoomDto(room));
     }
 
     @GetMapping("/{movie_theater_id}")
@@ -62,7 +62,7 @@ public class RoomController {
             @ApiResponse(responseCode = "404", description = "Room not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<Room> update(@RequestBody @Valid DataUpdateRoom data) {
+    public ResponseEntity<Room> update(@RequestBody @Valid UpdateRoomDto data) {
         return ResponseEntity.ok(roomService.updateRoom(data));
     }
 

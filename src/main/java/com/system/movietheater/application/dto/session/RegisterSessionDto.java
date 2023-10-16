@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-public record DataRegisterSession(
+public record RegisterSessionDto(
     @Schema(name = "date", description = "session date", example = "2023-10-26")
     @NotEmpty
     @NotBlank

@@ -1,15 +1,15 @@
 package com.system.movietheater.application.controller;
 
-import com.system.movietheater.application.dto.user.DataDetailingUser;
-import com.system.movietheater.application.dto.user.DataListingUser;
-import com.system.movietheater.application.dto.user.DataRegisterUser;
-import com.system.movietheater.application.dto.user.DataUpdateUser;
+import com.system.movietheater.application.dto.user.DetailingUserDto;
+import com.system.movietheater.application.dto.user.ListingUserDto;
+import com.system.movietheater.application.dto.user.RegisterUserDto;
+import com.system.movietheater.application.dto.user.UpdateUserDto;
 import com.system.movietheater.domain.model.User;
-import com.system.movietheater.application.dto.session.DataListingSession;
+import com.system.movietheater.application.dto.session.ListingSessionDto;
 import com.system.movietheater.domain.model.Session;
 import com.system.movietheater.infrastructure.persistence.repository.SessionRepository;
-import com.system.movietheater.application.dto.usersession.DataRegisterUserSession;
-import com.system.movietheater.application.dto.usersession.DataReturnUserSession;
+import com.system.movietheater.application.dto.usersession.RegisterUserSessionDto;
+import com.system.movietheater.application.dto.usersession.ReturnUserSessionDto;
 import com.system.movietheater.infrastructure.persistence.repository.UserSessionRepository;
 import com.system.movietheater.usercase.usersession.UserSessionService;
 import com.system.movietheater.usercase.user.UserService;
@@ -53,10 +53,10 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Name, email or/and password is blank." +
                     "<br>Email already exists in database.", content = @Content),
     })
-    public ResponseEntity<DataDetailingUser> register(@RequestBody @Valid DataRegisterUser data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<DetailingUserDto> register(@RequestBody @Valid RegisterUserDto data, UriComponentsBuilder uriBuilder) {
         var user = new User(userService.register(data));
 
-        return ResponseEntity.created(userService.generateUri(user, uriBuilder)).body(new DataDetailingUser(user));
+        return ResponseEntity.created(userService.generateUri(user, uriBuilder)).body(new DetailingUserDto(user));
     }
 
     @PostMapping("/sessao")
@@ -68,10 +68,10 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User or/and session not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<DataReturnUserSession> registerUserSession(@RequestBody @Valid DataRegisterUserSession data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<ReturnUserSessionDto> registerUserSession(@RequestBody @Valid RegisterUserSessionDto data, UriComponentsBuilder uriBuilder) {
         var userSession = userSessionService.registerUserSession(data);
 
-        return ResponseEntity.created(userSessionService.generateUri(userSession, uriBuilder)).body(new DataReturnUserSession(new DataListingUser(userSession.getUser()), new DataListingSession(userSession.getSession())));
+        return ResponseEntity.created(userSessionService.generateUri(userSession, uriBuilder)).body(new ReturnUserSessionDto(new ListingUserDto(userSession.getUser()), new ListingSessionDto(userSession.getSession())));
     }
 
     @GetMapping("{id}/sessao")
@@ -91,7 +91,7 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "Successful request: User listed.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<List<DataListingUser>> list(@PageableDefault(size = 10, sort = "name") Pageable pageable) {
+    public ResponseEntity<List<ListingUserDto>> list(@PageableDefault(size = 10, sort = "name") Pageable pageable) {
          return ResponseEntity.ok(userService.listUsers(pageable));
     }
 
@@ -102,7 +102,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<DataDetailingUser> select(@PathVariable Long id) {
+    public ResponseEntity<DetailingUserDto> select(@PathVariable Long id) {
         return ResponseEntity.ok(userService.selectUser(id));
     }
 
@@ -115,8 +115,8 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<DataDetailingUser> update(@RequestBody @Valid DataUpdateUser data) {
-        return ResponseEntity.ok(new DataDetailingUser(userService.updateUser(data)));
+    public ResponseEntity<DetailingUserDto> update(@RequestBody @Valid UpdateUserDto data) {
+        return ResponseEntity.ok(new DetailingUserDto(userService.updateUser(data)));
     }
 
     @PutMapping("/desativar")
@@ -128,8 +128,8 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<DataDetailingUser> disableAccount(@RequestBody Long id) {
-        return ResponseEntity.ok(new DataDetailingUser(userService.disableAccount(id)));
+    public ResponseEntity<DetailingUserDto> disableAccount(@RequestBody Long id) {
+        return ResponseEntity.ok(new DetailingUserDto(userService.disableAccount(id)));
     }
 
     @PutMapping("/ativar")
@@ -141,8 +141,8 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<DataDetailingUser> activeAccount(@RequestBody Long id) {
-        return ResponseEntity.ok(new DataDetailingUser(userService.activeAccount(id)));
+    public ResponseEntity<DetailingUserDto> activeAccount(@RequestBody Long id) {
+        return ResponseEntity.ok(new DetailingUserDto(userService.activeAccount(id)));
     }
 
 }

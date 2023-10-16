@@ -1,6 +1,6 @@
 package com.system.movietheater.domain.model;
 
-import com.system.movietheater.application.dto.usersession.DataRegisterUserSession;
+import com.system.movietheater.application.dto.usersession.RegisterUserSessionDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,7 +29,7 @@ public class UserSession {
     @JoinColumn(name = "fk_sessao_id")
     private Session session;
 
-    public UserSession(DataRegisterUserSession data) {
+    public UserSession(RegisterUserSessionDto data) {
         this.check = 1;
         this.user = new User(data.user());
         this.session = data.session();

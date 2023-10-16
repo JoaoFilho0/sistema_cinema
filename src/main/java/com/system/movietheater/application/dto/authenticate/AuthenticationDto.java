@@ -1,11 +1,11 @@
-package com.system.movietheater.application.dto.user;
+package com.system.movietheater.application.dto.authenticate;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
-public record DataAuthentication(
+public record AuthenticationDto(
         @Schema(name = "email", description = "user email", example = "john@gmail.com")
         @NotEmpty
         @NotBlank

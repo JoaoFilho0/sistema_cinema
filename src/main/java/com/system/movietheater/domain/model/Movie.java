@@ -1,8 +1,8 @@
 package com.system.movietheater.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.system.movietheater.application.dto.movie.DataRegisterMovie;
-import com.system.movietheater.application.dto.movie.DataUpdateMovie;
+import com.system.movietheater.application.dto.movie.RegisterMovieDto;
+import com.system.movietheater.application.dto.movie.UpdateMovieDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -34,7 +34,7 @@ public class Movie {
     @OneToMany(mappedBy = "movie", fetch = FetchType.EAGER)
     private List<Session> session;
 
-    public Movie(DataRegisterMovie data) {
+    public Movie(RegisterMovieDto data) {
         this.title = data.title();
         this.duration = data.duration();
     }
@@ -45,7 +45,7 @@ public class Movie {
         this.duration = movie.duration;
     }
 
-    public void updateData(DataUpdateMovie data) {
+    public void updateData(UpdateMovieDto data) {
         if(data.title() != null){
             this.title = data.title();
         }

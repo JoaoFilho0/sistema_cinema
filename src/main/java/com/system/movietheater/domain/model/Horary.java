@@ -1,8 +1,8 @@
 package com.system.movietheater.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.system.movietheater.application.dto.horary.DataRegisterHorary;
-import com.system.movietheater.application.dto.horary.DataUpdateHorary;
+import com.system.movietheater.application.dto.horary.RegisterHoraryDto;
+import com.system.movietheater.application.dto.horary.UpdateHoraryDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,13 +31,13 @@ public class Horary {
     @JoinColumn(name = "fk_cinema_id", nullable = false)
     private MovieTheater movieTheater;
 
-    public Horary(DataRegisterHorary data) {
+    public Horary(RegisterHoraryDto data) {
         this.day = data.day();
         this.horary = data.horary();
         this.movieTheater = new MovieTheater(data.movieTheater());
     }
 
-    public void updateData(DataUpdateHorary data) {
+    public void updateData(UpdateHoraryDto data) {
         if(data.day() != null) {
             this.day = data.day();
         }

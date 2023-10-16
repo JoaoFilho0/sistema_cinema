@@ -1,8 +1,8 @@
 package com.system.movietheater.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.system.movietheater.application.dto.room.DataRegisterRoom;
-import com.system.movietheater.application.dto.room.DataUpdateRoom;
+import com.system.movietheater.application.dto.room.RegisterRoomDto;
+import com.system.movietheater.application.dto.room.UpdateRoomDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,7 +31,7 @@ public class Room {
     @JoinColumn(name = "cin_id")
     private MovieTheater movieTheater;
 
-    public Room(DataRegisterRoom data) {
+    public Room(RegisterRoomDto data) {
         this.number = data.number();
         this.seats = data.seats();
         this.movieTheater = new MovieTheater(data.movieTheater());
@@ -44,7 +44,7 @@ public class Room {
         this.movieTheater = room.getMovieTheater();
     }
 
-    public void updateData(DataUpdateRoom data) {
+    public void updateData(UpdateRoomDto data) {
         if (data.number() != 0) {
             this.number = data.number();
         }

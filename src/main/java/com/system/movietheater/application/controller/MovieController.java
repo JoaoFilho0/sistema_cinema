@@ -1,8 +1,8 @@
 package com.system.movietheater.application.controller;
 
-import com.system.movietheater.application.dto.movie.DataListingMovie;
-import com.system.movietheater.application.dto.movie.DataRegisterMovie;
-import com.system.movietheater.application.dto.movie.DataUpdateMovie;
+import com.system.movietheater.application.dto.movie.ListingMovieDto;
+import com.system.movietheater.application.dto.movie.RegisterMovieDto;
+import com.system.movietheater.application.dto.movie.UpdateMovieDto;
 import com.system.movietheater.domain.model.Movie;
 import com.system.movietheater.usercase.movie.MovieService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,10 +37,10 @@ public class MovieController {
                     "<br> Movie already exists in database.", content = @Content)
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<DataListingMovie> register(@RequestBody @Valid DataRegisterMovie data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<ListingMovieDto> register(@RequestBody @Valid RegisterMovieDto data, UriComponentsBuilder uriBuilder) {
         var movie = new Movie(movieService.registerMovie(data));
 
-        return ResponseEntity.created(movieService.generateUri(movie, uriBuilder)).body(new DataListingMovie(movie));
+        return ResponseEntity.created(movieService.generateUri(movie, uriBuilder)).body(new ListingMovieDto(movie));
     }
 
     @GetMapping
@@ -48,7 +48,7 @@ public class MovieController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful request: Movie listed.", content = @Content)
     })
-    public ResponseEntity<List<DataListingMovie>> list(@PageableDefault(size = 10, sort = "title") Pageable pagination){
+    public ResponseEntity<List<ListingMovieDto>> list(@PageableDefault(size = 10, sort = "title") Pageable pagination){
         return ResponseEntity.ok(movieService.listMovies(pagination));
     }
 
@@ -62,7 +62,7 @@ public class MovieController {
             @ApiResponse(responseCode = "404", description = "Movie not found.", content = @Content)
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<DataListingMovie> update(@RequestBody @Valid DataUpdateMovie data) {
-        return ResponseEntity.ok(new DataListingMovie(movieService.updateMovie(data)));
+    public ResponseEntity<ListingMovieDto> update(@RequestBody @Valid UpdateMovieDto data) {
+        return ResponseEntity.ok(new ListingMovieDto(movieService.updateMovie(data)));
     }
 }

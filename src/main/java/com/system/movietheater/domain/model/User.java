@@ -1,8 +1,8 @@
 package com.system.movietheater.domain.model;
 
-import com.system.movietheater.application.dto.user.DataListingUser;
-import com.system.movietheater.application.dto.user.DataRegisterUser;
-import com.system.movietheater.application.dto.user.DataUpdateUser;
+import com.system.movietheater.application.dto.user.ListingUserDto;
+import com.system.movietheater.application.dto.user.RegisterUserDto;
+import com.system.movietheater.application.dto.user.UpdateUserDto;
 import com.system.movietheater.domain.Enum.TypeUserEnum;
 import jakarta.persistence.*;
 import lombok.*;
@@ -55,7 +55,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private List<TypeUserEnum> type;
 
-    public User(DataRegisterUser data) {
+    public User(RegisterUserDto data) {
         this.name = data.name();
         this.email = data.email();
         this.password = data.password();
@@ -70,13 +70,13 @@ public class User implements UserDetails {
         this.movieTheater = user.getMovieTheater();
     }
 
-    public User(DataListingUser user) {
+    public User(ListingUserDto user) {
         this.id = user.id();
         this.name = user.name();
         this.email = user.email();
     }
 
-    public void updateData(DataUpdateUser data) {
+    public void updateData(UpdateUserDto data) {
         if (data.name() != null) {
             this.name = data.name();
         }

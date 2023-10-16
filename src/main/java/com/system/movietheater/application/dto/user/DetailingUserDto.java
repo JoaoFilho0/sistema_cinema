@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 
-public record DataDetailingUser(
+public record DetailingUserDto(
         @Schema(name = "id", description = "user id", example = "1")
         Long id,
         @Schema(name = "name", description = "user name", example = "John")
@@ -19,7 +19,7 @@ public record DataDetailingUser(
         Boolean active
 ) {
 
-    public DataDetailingUser(User user) {
+    public DetailingUserDto(User user) {
         this(user.getId(), user.getName(), user.getEmail(), user.getMovieTheater(), user.getActive());
     }
 

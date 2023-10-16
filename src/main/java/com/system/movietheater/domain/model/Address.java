@@ -1,7 +1,7 @@
 package com.system.movietheater.domain.model;
 
-import com.system.movietheater.application.dto.address.DataRegisterAddress;
-import com.system.movietheater.application.dto.address.DataUpdateAddress;
+import com.system.movietheater.application.dto.address.RegisterAddressDto;
+import com.system.movietheater.application.dto.address.UpdateAddressDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -33,14 +33,14 @@ public class Address {
     @Column(name = "end_numero", nullable = false)
     private String number;
 
-    public Address(DataRegisterAddress data){
+    public Address(RegisterAddressDto data){
         this.city = data.city();
         this.district = data.district();
         this.street = data.street();
         this.number = data.number();
     }
 
-    public void updateData(DataUpdateAddress data) {
+    public void updateData(UpdateAddressDto data) {
         if (data.city() != null) {
             this.city = data.city();
         }

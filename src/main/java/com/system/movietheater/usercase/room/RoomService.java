@@ -1,7 +1,7 @@
 package com.system.movietheater.usercase.room;
 
-import com.system.movietheater.application.dto.room.DataRegisterRoom;
-import com.system.movietheater.application.dto.room.DataUpdateRoom;
+import com.system.movietheater.application.dto.room.RegisterRoomDto;
+import com.system.movietheater.application.dto.room.UpdateRoomDto;
 import com.system.movietheater.domain.model.MovieTheater;
 import com.system.movietheater.domain.model.Room;
 import com.system.movietheater.infrastructure.persistence.repository.MovieTheaterRepository;
@@ -25,7 +25,7 @@ public class RoomService {
     @Autowired
     private MovieTheaterRepository movieTheaterRepository;
 
-    public Room registerRoom(DataRegisterRoom data) {
+    public Room registerRoom(RegisterRoomDto data) {
         var room = new Room(data);
 
         movieTheaterRepository.findById(data.movieTheater().id()).orElseThrow(MovieTheaterNotFoundException::new);
@@ -48,7 +48,7 @@ public class RoomService {
         return movieTheater.getRooms();
     }
 
-    public Room updateRoom(DataUpdateRoom data) {
+    public Room updateRoom(UpdateRoomDto data) {
         System.out.println(data.toString());
 
         var room = roomRepository.findById(data.id()).orElseThrow(RoomNotFoundException::new);

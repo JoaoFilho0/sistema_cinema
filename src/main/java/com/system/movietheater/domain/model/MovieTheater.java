@@ -1,9 +1,9 @@
 package com.system.movietheater.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.system.movietheater.application.dto.movietheater.DataListingMovieTheater;
-import com.system.movietheater.application.dto.movietheater.DataRegisterMovieTheater;
-import com.system.movietheater.application.dto.movietheater.DataUpdateMovieTheater;
+import com.system.movietheater.application.dto.movietheater.ListingMovieTheaterDto;
+import com.system.movietheater.application.dto.movietheater.RegisterMovieTheaterDto;
+import com.system.movietheater.application.dto.movietheater.UpdateMovieTheaterDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -41,7 +41,7 @@ public class    MovieTheater {
     @OneToMany(mappedBy = "movieTheater", fetch = FetchType.EAGER)
     private List<Horary> horaries;
 
-    public MovieTheater(DataRegisterMovieTheater data) {
+    public MovieTheater(RegisterMovieTheaterDto data) {
         this.name = data.name();
         this.address = new Address(data.address());
     }
@@ -54,11 +54,11 @@ public class    MovieTheater {
         this.horaries = movieTheater.getHoraries();
     }
 
-    public MovieTheater(DataListingMovieTheater dataListingMovieTheater) {
-        this.id = dataListingMovieTheater.id();
+    public MovieTheater(ListingMovieTheaterDto listingMovieTheaterDto) {
+        this.id = listingMovieTheaterDto.id();
     }
 
-    public void updateData(DataUpdateMovieTheater data) {
+    public void updateData(UpdateMovieTheaterDto data) {
         if (this.name != null) {
             this.name = data.name();
         }

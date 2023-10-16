@@ -1,10 +1,10 @@
 package com.system.movietheater.application.dto.room;
 
-import com.system.movietheater.application.dto.movietheater.DataListingMovieTheater;
+import com.system.movietheater.application.dto.movietheater.ListingMovieTheaterDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
-public record DataRegisterRoom(
+public record RegisterRoomDto(
         @Schema(name = "number", description = "cinema room number", example = "1")
         @NotNull
         int number,
@@ -13,5 +13,5 @@ public record DataRegisterRoom(
         int seats,
         @Schema(name = "movieTheater", description = "movie theater")
         @NotNull
-        DataListingMovieTheater movieTheater) {
+        ListingMovieTheaterDto movieTheater) {
 }

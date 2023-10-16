@@ -1,7 +1,7 @@
 package com.system.movietheater.application.controller;
 
-import com.system.movietheater.application.dto.session.DataListingSession;
-import com.system.movietheater.application.dto.session.DataRegisterSession;
+import com.system.movietheater.application.dto.session.ListingSessionDto;
+import com.system.movietheater.application.dto.session.RegisterSessionDto;
 import com.system.movietheater.domain.model.Session;
 import com.system.movietheater.usercase.session.SessionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,10 +34,10 @@ public class SessionController {
             @ApiResponse(responseCode = "404", description = "Room or movie not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<DataListingSession> register(@RequestBody @Valid DataRegisterSession data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<ListingSessionDto> register(@RequestBody @Valid RegisterSessionDto data, UriComponentsBuilder uriBuilder) {
         var session = new Session(sessionService.registerSession(data));
 
-        return ResponseEntity.created(sessionService.generateUri(session, uriBuilder)).body(new DataListingSession(session));
+        return ResponseEntity.created(sessionService.generateUri(session, uriBuilder)).body(new ListingSessionDto(session));
     }
 
     @GetMapping
@@ -45,7 +45,7 @@ public class SessionController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful request: Session listed.", content = @Content),
     })
-    public ResponseEntity<List<DataListingSession>> list() {
+    public ResponseEntity<List<ListingSessionDto>> list() {
         return ResponseEntity.ok(sessionService.list());
     }
 

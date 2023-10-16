@@ -1,9 +1,9 @@
 package com.system.movietheater.application.controller;
 
-import com.system.movietheater.application.dto.movietheater.DataDetalingMovieTheater;
-import com.system.movietheater.application.dto.movietheater.DataListingMovieTheater;
-import com.system.movietheater.application.dto.movietheater.DataRegisterMovieTheater;
-import com.system.movietheater.application.dto.movietheater.DataUpdateMovieTheater;
+import com.system.movietheater.application.dto.movietheater.DetalingMovieTheaterDto;
+import com.system.movietheater.application.dto.movietheater.ListingMovieTheaterDto;
+import com.system.movietheater.application.dto.movietheater.RegisterMovieTheaterDto;
+import com.system.movietheater.application.dto.movietheater.UpdateMovieTheaterDto;
 import com.system.movietheater.domain.model.MovieTheater;
 import com.system.movietheater.usercase.movietheater.MovieTheaterService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,10 +39,10 @@ public class MovieTheaterController {
             @ApiResponse(responseCode = "404", description = "User not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<DataDetalingMovieTheater> register(@RequestBody @Valid DataRegisterMovieTheater data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<DetalingMovieTheaterDto> register(@RequestBody @Valid RegisterMovieTheaterDto data, UriComponentsBuilder uriBuilder) {
         var movieTheater = new MovieTheater(movieTheaterService.register(data));
 
-        return ResponseEntity.created(movieTheaterService.generateUri(movieTheater, uriBuilder)).body(new DataDetalingMovieTheater(movieTheater));
+        return ResponseEntity.created(movieTheaterService.generateUri(movieTheater, uriBuilder)).body(new DetalingMovieTheaterDto(movieTheater));
     }
 
     @GetMapping
@@ -50,7 +50,7 @@ public class MovieTheaterController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful request: List movie theaters.", content = @Content),
     })
-    public ResponseEntity<List<DataListingMovieTheater>> list(@PageableDefault(size = 10, sort = {"nome"}) Pageable pagination) {
+    public ResponseEntity<List<ListingMovieTheaterDto>> list(@PageableDefault(size = 10, sort = {"nome"}) Pageable pagination) {
         return ResponseEntity.ok(movieTheaterService.listMovieTheaters());
     }
 
@@ -60,8 +60,8 @@ public class MovieTheaterController {
             @ApiResponse(responseCode = "200", description = "Successful request: Movie theater selected.", content = @Content),
             @ApiResponse(responseCode = "404", description = "Movie theater not found.", content = @Content),
     })
-    public ResponseEntity<DataDetalingMovieTheater> select(@PathVariable Long id) {
-        return ResponseEntity.ok(new DataDetalingMovieTheater(movieTheaterService.selectMovieTheater(id)));
+    public ResponseEntity<DetalingMovieTheaterDto> select(@PathVariable Long id) {
+        return ResponseEntity.ok(new DetalingMovieTheaterDto(movieTheaterService.selectMovieTheater(id)));
     }
 
     @PutMapping
@@ -72,8 +72,8 @@ public class MovieTheaterController {
             @ApiResponse(responseCode = "404", description = "Movie theater not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<DataDetalingMovieTheater> update(@RequestBody @Valid DataUpdateMovieTheater data) {
-        return ResponseEntity.ok(new DataDetalingMovieTheater(movieTheaterService.updateMovieTheater(data)));
+    public ResponseEntity<DetalingMovieTheaterDto> update(@RequestBody @Valid UpdateMovieTheaterDto data) {
+        return ResponseEntity.ok(new DetalingMovieTheaterDto(movieTheaterService.updateMovieTheater(data)));
     }
 
     @DeleteMapping

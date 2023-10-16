@@ -1,7 +1,7 @@
 package com.system.movietheater.usercase.horary;
 
-import com.system.movietheater.application.dto.horary.DataRegisterHorary;
-import com.system.movietheater.application.dto.horary.DataUpdateHorary;
+import com.system.movietheater.application.dto.horary.RegisterHoraryDto;
+import com.system.movietheater.application.dto.horary.UpdateHoraryDto;
 import com.system.movietheater.infrastructure.validations.horary.ValidationHorary;
 import com.system.movietheater.domain.model.Horary;
 import com.system.movietheater.infrastructure.persistence.repository.MovieTheaterRepository;
@@ -27,7 +27,7 @@ public class HoraryService {
     @Autowired
     private List<ValidationHorary> validations;
 
-    public Horary registerHorary(DataRegisterHorary data) {
+    public Horary registerHorary(RegisterHoraryDto data) {
         if (horaryRepository.findMovieTheaterAndDay(data.movieTheater().id(), data.day()) != null) {
             throw new HoraryAlreadyExistsException();
         }
@@ -44,7 +44,7 @@ public class HoraryService {
         return horary;
     }
 
-    public Horary updateHorary(DataUpdateHorary data) {
+    public Horary updateHorary(UpdateHoraryDto data) {
         if (horaryRepository.findMovieTheaterAndDay(data.movieTheater().id(), data.day()) != null) {
             throw new HoraryAlreadyExistsException();
         }

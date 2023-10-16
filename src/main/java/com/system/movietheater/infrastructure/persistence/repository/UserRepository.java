@@ -1,6 +1,6 @@
 package com.system.movietheater.infrastructure.persistence.repository;
 
-import com.system.movietheater.application.dto.user.DataListingUser;
+import com.system.movietheater.application.dto.user.ListingUserDto;
 import com.system.movietheater.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +16,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query( value = "SELECT * FROM usuario u WHERE u.usu_email = :email", nativeQuery = true)
     User findEmail(String email);
 
-    List<DataListingUser> findByActiveTrue();
+    List<ListingUserDto> findByActiveTrue();
 }

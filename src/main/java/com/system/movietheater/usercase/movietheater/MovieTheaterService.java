@@ -1,8 +1,8 @@
 package com.system.movietheater.usercase.movietheater;
 
-import com.system.movietheater.application.dto.movietheater.DataListingMovieTheater;
-import com.system.movietheater.application.dto.movietheater.DataRegisterMovieTheater;
-import com.system.movietheater.application.dto.movietheater.DataUpdateMovieTheater;
+import com.system.movietheater.application.dto.movietheater.ListingMovieTheaterDto;
+import com.system.movietheater.application.dto.movietheater.RegisterMovieTheaterDto;
+import com.system.movietheater.application.dto.movietheater.UpdateMovieTheaterDto;
 import com.system.movietheater.domain.model.MovieTheater;
 import com.system.movietheater.infrastructure.persistence.repository.AddressRepository;
 import com.system.movietheater.usercase.horary.HoraryService;
@@ -48,7 +48,7 @@ public class MovieTheaterService {
     @Autowired
     private HoraryService horaryService;
 
-    public MovieTheater register(DataRegisterMovieTheater data) {
+    public MovieTheater register(RegisterMovieTheaterDto data) {
         var user = userRepository.findById(data.user()).orElseThrow(UserNotFoundExcpetion::new);
 
         if (movieTheaterRepository.findByName(data.name()) != null) {
@@ -77,15 +77,15 @@ public class MovieTheaterService {
         return uriBuilder.path("cinema/{id}").buildAndExpand(movieTheater.getId()).toUri();
     }
 
-    public List<DataListingMovieTheater> listMovieTheaters() {
-        return movieTheaterRepository.findAllMovieTheaterActive().stream().map(DataListingMovieTheater::new).toList();
+    public List<ListingMovieTheaterDto> listMovieTheaters() {
+        return movieTheaterRepository.findAllMovieTheaterActive().stream().map(ListingMovieTheaterDto::new).toList();
     }
 
     public MovieTheater selectMovieTheater(Long id) {
         return movieTheaterRepository.findById(id).orElseThrow(MovieTheaterNotFoundException::new);
     }
 
-    public MovieTheater updateMovieTheater(DataUpdateMovieTheater data) {
+    public MovieTheater updateMovieTheater(UpdateMovieTheaterDto data) {
         var address = addressRepository.findByNumberAndStreetAndDistrictAndCity(data.address().number(), data.address().street(), data.address().district(), data.address().city());
         if (!Objects.equals(address.getId(), data.address().id())) throw new AddressMovieTheaterAlreadyExistsException("Address movie theater already exists");
 

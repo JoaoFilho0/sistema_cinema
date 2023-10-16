@@ -1,7 +1,7 @@
 package com.system.movietheater.application.controller;
 
-import com.system.movietheater.application.dto.horary.DataRegisterHorary;
-import com.system.movietheater.application.dto.horary.DataUpdateHorary;
+import com.system.movietheater.application.dto.horary.RegisterHoraryDto;
+import com.system.movietheater.application.dto.horary.UpdateHoraryDto;
 import com.system.movietheater.domain.model.Horary;
 import com.system.movietheater.usercase.horary.HoraryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,7 +35,7 @@ public class HoraryController {
             @ApiResponse(responseCode = "404", description = "Movie theater not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<Horary> register(@RequestBody @Valid DataRegisterHorary data) {
+    public ResponseEntity<Horary> register(@RequestBody @Valid RegisterHoraryDto data) {
         return ResponseEntity.ok(horaryService.registerHorary(data));
     }
 
@@ -58,7 +58,7 @@ public class HoraryController {
                     "<br>Movie theater not found.", content = @Content),
     })
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<Horary> update(@RequestBody @Valid DataUpdateHorary data) {
+    public ResponseEntity<Horary> update(@RequestBody @Valid UpdateHoraryDto data) {
         return ResponseEntity.ok(horaryService.updateHorary(data));
     }
 

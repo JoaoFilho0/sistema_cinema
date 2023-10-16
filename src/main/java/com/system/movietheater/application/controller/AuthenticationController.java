@@ -1,6 +1,6 @@
 package com.system.movietheater.application.controller;
 
-import com.system.movietheater.application.dto.user.DataAuthentication;
+import com.system.movietheater.application.dto.authenticate.AuthenticationDto;
 import com.system.movietheater.domain.model.User;
 import com.system.movietheater.application.dto.DataTokenJWT;
 import com.system.movietheater.usercase.security.TokenService;
@@ -35,7 +35,7 @@ public class AuthenticationController {
             @ApiResponse(responseCode = "400", description = "Email or password is blank.", content = @Content),
             @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content),
     })
-    public ResponseEntity<DataTokenJWT> login(@RequestBody @Valid DataAuthentication data) {
+    public ResponseEntity<DataTokenJWT> login(@RequestBody @Valid AuthenticationDto data) {
         var authenticationToken = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var authentication = authenticationManager.authenticate(authenticationToken);
 

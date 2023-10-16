@@ -1,12 +1,12 @@
 package com.system.movietheater.application.dto.horary;
 
-import com.system.movietheater.application.dto.movietheater.DataListingMovieTheater;
+import com.system.movietheater.application.dto.movietheater.ListingMovieTheaterDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-public record DataRegisterHorary(
+public record RegisterHoraryDto(
         @Schema(name = "day", description = "day of week", example = "Segunda-feira")
         @NotEmpty
         @NotBlank
@@ -17,5 +17,5 @@ public record DataRegisterHorary(
         String horary,
         @Schema(name = "movieTheater", description = "movie theater")
         @NotNull
-        DataListingMovieTheater movieTheater) {
+        ListingMovieTheaterDto movieTheater) {
 }
