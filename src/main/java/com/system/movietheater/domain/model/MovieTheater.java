@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class    MovieTheater {
+public class MovieTheater {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

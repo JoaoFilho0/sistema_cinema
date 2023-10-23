@@ -7,11 +7,12 @@ import com.system.movietheater.application.dto.user.UpdateUserDto;
 import com.system.movietheater.domain.model.User;
 import com.system.movietheater.infrastructure.exceptions.BadRequestException;
 import com.system.movietheater.infrastructure.exceptions.EmailAlreadyRegisteredException;
-import com.system.movietheater.infrastructure.exceptions.UserNotFoundExcpetion;
+import com.system.movietheater.infrastructure.exceptions.UserNotFoundException;
 import com.system.movietheater.infrastructure.persistence.repository.UserRepository;
 import com.system.movietheater.infrastructure.config.SecurityConfigurations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -33,7 +34,7 @@ public class UserService {
         }
 
         var user = new User(data);
-        var password = securityConfigurations.passwordEncoder().encode(user.getPassword());
+        var password = new BCryptPasswordEncoder().encode(user.getPassword());
         user.setPassword(password);
 
         userRepository.save(user);
@@ -49,7 +50,10 @@ public class UserService {
     }
 
     public URI generateUri(User user, UriComponentsBuilder uriBuilder) {
-        return uriBuilder.path("usuario/{id}").buildAndExpand(user.getId()).toUri();
+        if (userRepository.findEmail(user.getEmail()) != null) {
+            return uriBuilder.path("usuario/{id}").buildAndExpand(user.getId()).toUri();
+        }
+        throw new UserNotFoundException("User not found");
     }
 
     public List<ListingUserDto> listUsers(Pageable pagination) {
@@ -61,20 +65,20 @@ public class UserService {
     }
 
     public DetailingUserDto selectUser(Long id) {
-        var user = userRepository.findById(id).orElseThrow(UserNotFoundExcpetion::new);
+        var user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
 
         return new DetailingUserDto(user);
     }
 
     public User updateUser(UpdateUserDto data) {
-        var user = userRepository.findById(data.id()).orElseThrow(UserNotFoundExcpetion::new);
+        var user = userRepository.findById(data.id()).orElseThrow(() -> new UserNotFoundException("User not found"));
         user.updateData(data);
 
         return user;
     }
 
     public User activeAccount(Long id) {
-        var user = userRepository.findById(id).orElseThrow(UserNotFoundExcpetion::new);
+        var user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
 
         if(user.getActive()){
             throw new BadRequestException("User account active");
@@ -86,7 +90,7 @@ public class UserService {
     }
 
     public User disableAccount(Long id) {
-        var user = userRepository.findById(id).orElseThrow(UserNotFoundExcpetion::new);
+        var user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
 
         if(!user.getActive()) {
             throw new BadRequestException("User account disabled");

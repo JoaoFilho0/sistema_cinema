@@ -23,8 +23,8 @@ public class HandlingErrors {
         return ResponseEntity.status(HttpStatusCode.valueOf(404)).body(exception.getMessage());
     }
 
-    @ExceptionHandler(UserNotFoundExcpetion.class)
-    public ResponseEntity<String> handleErrorUserNotFound404(UserNotFoundExcpetion exception) {
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleErrorUserNotFound404(UserNotFoundException exception) {
         return ResponseEntity.status(HttpStatusCode.valueOf(404)).body(exception.getMessage());
     }
 

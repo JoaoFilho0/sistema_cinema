@@ -52,4 +52,10 @@ public class MovieService {
 
         return movie;
     }
+
+    public void deleteMovie(Long id) {
+        var movie = movieRepository.findById(id).orElseThrow(MovieNotFoundException::new);
+
+        movieRepository.delete(movie);
+    }
 }

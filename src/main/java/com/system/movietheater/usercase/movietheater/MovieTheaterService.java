@@ -49,7 +49,7 @@ public class MovieTheaterService {
     private HoraryService horaryService;
 
     public MovieTheater register(RegisterMovieTheaterDto data) {
-        var user = userRepository.findById(data.user()).orElseThrow(UserNotFoundExcpetion::new);
+        var user = userRepository.findById(data.user()).orElseThrow(() -> new UserNotFoundException("User not found"));
 
         if (movieTheaterRepository.findByName(data.name()) != null) {
             throw new NameMovieTheaterAlreadyRegisteredException("Name movie theater already exists");

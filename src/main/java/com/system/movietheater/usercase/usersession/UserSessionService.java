@@ -8,7 +8,7 @@ import com.system.movietheater.application.dto.user.ListingUserDto;
 import com.system.movietheater.domain.model.User;
 import com.system.movietheater.infrastructure.persistence.repository.UserRepository;
 import com.system.movietheater.infrastructure.exceptions.SessionNotFoundException;
-import com.system.movietheater.infrastructure.exceptions.UserNotFoundExcpetion;
+import com.system.movietheater.infrastructure.exceptions.UserNotFoundException;
 import com.system.movietheater.infrastructure.persistence.repository.UserSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class UserSessionService {
 
     public UserSession registerUserSession(RegisterUserSessionDto data) {
         var session = sessionRepository.findById(data.session().getId()).orElseThrow(SessionNotFoundException::new);
-        var user = userRepository.findById(data.user().id()).orElseThrow(UserNotFoundExcpetion::new);
+        var user = userRepository.findById(data.user().id()).orElseThrow(() -> new UserNotFoundException("User not found"));
         var userSession = new UserSession(new RegisterUserSessionDto(new ListingUserDto(user), session));
 
         userSession.setSession(session);
@@ -48,6 +48,6 @@ public class UserSessionService {
     }
 
     public User listingUserSessionPerUser(Long id) {
-        return userRepository.findById(id).orElseThrow(UserNotFoundExcpetion::new);
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 }

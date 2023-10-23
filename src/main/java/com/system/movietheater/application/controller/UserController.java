@@ -54,7 +54,7 @@ public class UserController {
                     "<br>Email already exists in database.", content = @Content),
     })
     public ResponseEntity<DetailingUserDto> register(@RequestBody @Valid RegisterUserDto data, UriComponentsBuilder uriBuilder) {
-        var user = new User(userService.register(data));
+        var user = userService.register(data);
 
         return ResponseEntity.created(userService.generateUri(user, uriBuilder)).body(new DetailingUserDto(user));
     }
