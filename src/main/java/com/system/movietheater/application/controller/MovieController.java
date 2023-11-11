@@ -49,7 +49,7 @@ public class MovieController {
             @ApiResponse(responseCode = "200", description = "Successful request: Movie listed.", content = @Content)
     })
     public ResponseEntity<List<ListingMovieDto>> list(@PageableDefault(size = 10, sort = "title") Pageable pagination){
-        return ResponseEntity.ok(movieService.listMovies(pagination));
+        return ResponseEntity.ok(movieService.listMovies());
     }
 
     @PutMapping
@@ -64,5 +64,19 @@ public class MovieController {
     @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<ListingMovieDto> update(@RequestBody @Valid UpdateMovieDto data) {
         return ResponseEntity.ok(new ListingMovieDto(movieService.updateMovie(data)));
+    }
+
+    @DeleteMapping
+    @Transactional
+    @Operation(summary = "Delete movie")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Successful request: Movie deleted.", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Movie not found.", content = @Content)
+    })
+    @SecurityRequirement(name = "bearer-key")
+    public ResponseEntity<String> delete(@RequestBody Long id) {
+        this.movieService.deleteMovie(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

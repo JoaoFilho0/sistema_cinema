@@ -37,8 +37,8 @@ public class MovieService {
         return uriBuilder.path("cinema/filme/{id}").buildAndExpand(movie.getId()).toUri();
     }
 
-    public List<ListingMovieDto> listMovies(Pageable pagination) {
-        return movieRepository.findAll(pagination).stream().map(ListingMovieDto::new).toList();
+    public List<ListingMovieDto> listMovies() {
+        return movieRepository.findAll().stream().map(ListingMovieDto::new).toList();
     }
 
     public Movie updateMovie(UpdateMovieDto data) {

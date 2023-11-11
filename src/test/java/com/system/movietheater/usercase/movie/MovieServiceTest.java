@@ -1,5 +1,6 @@
 package com.system.movietheater.usercase.movie;
 
+import com.system.movietheater.application.dto.movie.ListingMovieDto;
 import com.system.movietheater.application.dto.movie.RegisterMovieDto;
 import com.system.movietheater.application.dto.movie.UpdateMovieDto;
 import com.system.movietheater.domain.model.Movie;
@@ -10,9 +11,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.test.context.support.WithMockUser;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.then;
 
 @SpringBootTest
 class MovieServiceTest {
@@ -33,6 +40,13 @@ class MovieServiceTest {
 
         Assertions.assertEquals("O Filme", this.movie.getTitle());
         Assertions.assertNotNull(this.movie.getId());
+    }
+
+    @Test
+    void shouldReturnMovieList() {
+        var movieList = this.movieService.listMovies();
+
+        Assertions.assertNotEquals(0, movieList.size());
     }
 
     @Test
